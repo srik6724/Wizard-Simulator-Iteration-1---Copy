@@ -1,0 +1,483 @@
+================================================================================
+MATCH #1 - 2025-11-01T15:43:38.114098800
+================================================================================
+Team 1 (AI): Travis Waterblood (Balance)
+Team 2 (AI): Paul Duskglade (Balance)
+--------------------------------------------------------------------------------
+Round 1 | Team 1 | Discard 2 cards | Reward: 0.00
+Round 1 | Team 1 | Draw 1 TCs | Reward: 0.00
+Round 1 | Team 1 | Cast Balance Blade | Reward: 0.00
+Round 1 | Team 2 | Discard 4 cards | Reward: 0.00
+Round 1 | Team 2 | Draw 4 TCs | Reward: 0.00
+Round 1 | Team 2 | Cast Stun Block | Reward: 0.00
+Round 2 | Team 1 | Discard 5 cards | Reward: 0.00
+Round 2 | Team 1 | Draw 4 TCs | Reward: 0.00
+Round 2 | Team 1 | Cast TC Elemental Shield | Reward: 0.00
+Round 2 | Team 2 | Discard 2 cards | Reward: 0.00
+Round 2 | Team 2 | Draw 0 TCs | Reward: 0.00
+Round 2 | Team 2 | Cast Power Nova | Reward: 0.00
+Round 3 | Team 1 | Discard 2 cards | Reward: 0.00
+Round 3 | Team 1 | Draw 1 TCs | Reward: 0.00
+Round 3 | Team 1 | Cast Glacial Fortress | Reward: 0.00
+Round 3 | Team 2 | Discard 6 cards | Reward: 0.00
+Round 3 | Team 2 | Draw 6 TCs | Reward: 0.00
+Round 3 | Team 2 | Cast TC Cleanse Charm | Reward: 0.00
+Round 4 | Team 1 | Discard 3 cards | Reward: 0.00
+Round 4 | Team 1 | Draw 0 TCs | Reward: 0.00
+Round 4 | Team 1 | Pass | Reward: 0.00
+Round 4 | Team 2 | Discard 0 cards | Reward: 0.00
+Round 4 | Team 2 | Draw 0 TCs | Reward: 0.00
+Round 4 | Team 2 | Cast TC Infallible | Reward: 0.00
+Round 5 | Team 1 | Discard 4 cards | Reward: 0.00
+Round 5 | Team 1 | Draw 1 TCs | Reward: 0.00
+Round 5 | Team 1 | Cast Power Nova | Reward: 0.00
+Round 5 | Team 2 | Discard 2 cards | Reward: 0.00
+Round 5 | Team 2 | Draw 2 TCs | Reward: 0.00
+Round 5 | Team 2 | Cast TC Elemental Shield | Reward: 0.00
+Round 6 | Team 1 | Discard 5 cards | Reward: 0.00
+Round 6 | Team 1 | Draw 2 TCs | Reward: 0.00
+Round 6 | Team 1 | Pass | Reward: 0.00
+Round 6 | Team 2 | Discard 5 cards | Reward: 0.00
+Round 6 | Team 2 | Draw 3 TCs | Reward: 0.00
+Round 6 | Team 2 | Cast Bladestorm | Reward: 0.00
+Round 7 | Team 1 | Discard 0 cards | Reward: 0.00
+Round 7 | Team 1 | Draw 0 TCs | Reward: 0.00
+Round 7 | Team 1 | Cast Jinn’s Defense | Reward: 0.00
+Round 7 | Team 2 | Discard 1 cards | Reward: 0.00
+Round 7 | Team 2 | Draw 1 TCs | Reward: 0.00
+Round 7 | Team 2 | Cast TC Infallible | Reward: 0.00
+Round 8 | Team 1 | Discard 7 cards | Reward: 0.00
+Round 8 | Team 1 | Draw 3 TCs | Reward: 0.00
+Round 8 | Team 1 | Pass | Reward: 0.00
+Round 8 | Team 2 | Discard 5 cards | Reward: 0.00
+Round 8 | Team 2 | Draw 2 TCs | Reward: 0.00
+Round 8 | Team 2 | Cast TC Balance Blade | Reward: 0.00
+Round 9 | Team 1 | Discard 5 cards | Reward: 0.00
+Round 9 | Team 1 | Draw 1 TCs | Reward: 0.00
+Round 9 | Team 1 | Pass | Reward: 0.00
+Round 9 | Team 2 | Discard 7 cards | Reward: 0.00
+Round 9 | Team 2 | Draw 2 TCs | Reward: 0.00
+Round 9 | Team 2 | Cast TC Weakness | Reward: 0.00
+Round 10 | Team 1 | Discard 6 cards | Reward: 0.00
+Round 10 | Team 1 | Draw 0 TCs | Reward: 0.00
+Round 10 | Team 1 | Pass | Reward: 0.00
+Round 10 | Team 2 | Discard 0 cards | Reward: 0.00
+Round 10 | Team 2 | Draw 0 TCs | Reward: 0.00
+Round 10 | Team 2 | Cast Balance Blade | Reward: 0.00
+Round 11 | Team 1 | Discard 5 cards | Reward: 0.00
+Round 11 | Team 1 | Draw 5 TCs | Reward: 0.00
+Round 11 | Team 1 | Cast TC Legion-Shield | Reward: 0.00
+Round 11 | Team 2 | Discard 1 cards | Reward: 0.00
+Round 11 | Team 2 | Draw 0 TCs | Reward: 0.00
+Round 11 | Team 2 | Cast Oni’s Shadow | Reward: 0.00
+Round 12 | Team 1 | Discard 7 cards | Reward: 0.00
+Round 12 | Team 1 | Draw 6 TCs | Reward: 0.00
+Round 12 | Team 1 | Cast TC Weakness | Reward: 0.00
+Round 12 | Team 2 | Discard 3 cards | Reward: 0.00
+Round 12 | Team 2 | Draw 3 TCs | Reward: 0.00
+Round 12 | Team 2 | Cast Donate Pip | Reward: 0.00
+Round 13 | Team 1 | Discard 2 cards | Reward: 0.00
+Round 13 | Team 1 | Draw 2 TCs | Reward: 0.00
+Round 13 | Team 1 | Cast TC Empower | Reward: 0.00
+Round 13 | Team 2 | Discard 3 cards | Reward: 0.00
+Round 13 | Team 2 | Draw 0 TCs | Reward: 0.00
+Round 13 | Team 2 | Pass | Reward: 0.00
+Round 14 | Team 1 | Discard 7 cards | Reward: 0.00
+Round 14 | Team 1 | Draw 4 TCs | Reward: 0.00
+Round 14 | Team 1 | Cast TC Elemental Trap | Reward: 0.00
+Round 14 | Team 2 | Discard 0 cards | Reward: 0.00
+Round 14 | Team 2 | Draw 0 TCs | Reward: 0.00
+Round 14 | Team 2 | Cast Steel Giant | Reward: 0.00
+Round 15 | Team 1 | Discard 7 cards | Reward: 0.00
+Round 15 | Team 1 | Draw 0 TCs | Reward: 0.00
+Round 15 | Team 1 | Pass | Reward: 0.00
+Round 15 | Team 2 | Discard 2 cards | Reward: 0.00
+Round 15 | Team 2 | Draw 1 TCs | Reward: 0.00
+Round 15 | Team 2 | Cast Sandstorm | Reward: 0.00
+Round 16 | Team 1 | Discard 7 cards | Reward: 0.00
+Round 16 | Team 1 | Draw 0 TCs | Reward: 0.00
+Round 16 | Team 1 | Pass | Reward: 0.00
+Round 16 | Team 2 | Discard 3 cards | Reward: 0.00
+Round 16 | Team 2 | Draw 3 TCs | Reward: 0.00
+Round 16 | Team 2 | Cast TC Power Nova | Reward: 0.00
+Round 17 | Team 1 | Discard 1 cards | Reward: 0.00
+Round 17 | Team 1 | Draw 0 TCs | Reward: 0.00
+Round 17 | Team 1 | Cast Elemental Trap | Reward: 0.00
+Round 17 | Team 2 | Discard 0 cards | Reward: 0.00
+Round 17 | Team 2 | Draw 0 TCs | Reward: 0.00
+Round 17 | Team 2 | Cast TC Elemental Trap | Reward: 0.00
+Round 18 | Team 1 | Discard 6 cards | Reward: 0.00
+Round 18 | Team 1 | Draw 0 TCs | Reward: 0.00
+Round 18 | Team 1 | Pass | Reward: 0.00
+Round 18 | Team 2 | Discard 4 cards | Reward: 0.00
+Round 18 | Team 2 | Draw 1 TCs | Reward: 0.00
+Round 18 | Team 2 | Cast TC Legion-Shield | Reward: 0.00
+Round 19 | Team 1 | Discard 6 cards | Reward: 0.00
+Round 19 | Team 1 | Draw 0 TCs | Reward: 0.00
+Round 19 | Team 1 | Pass | Reward: 0.00
+Round 19 | Team 2 | WON | Reward: 0.00
+--------------------------------------------------------------------------------
+WINNER: Team 2 | Final Round: 19
+================================================================================
+
+================================================================================
+MATCH #2 - 2025-11-01T18:12:33.832249200
+================================================================================
+Team 1 (AI): Travis Waterblood (Balance)
+Team 2 (AI): Paul Duskglade (Balance)
+--------------------------------------------------------------------------------
+Round 1 | Team 1 | Discarded Duststorm Jinn [Balance] - 9 pips (Chance: 80%) | Reward: 0.00
+Round 1 | Team 1 | Discarded Duststorm Jinn [Balance] - 9 pips (Chance: 80%) | Reward: 0.00
+Round 1 | Team 1 | Discarded Reshuffle [Balance] - 4 pips (Chance: 100%) | Reward: 0.00
+Round 1 | Team 1 | Drew 3cards | Reward: 0.00
+Round 1 | Team 1 | Drew TC Weakness | Reward: 0.00
+Round 1 | Team 1 | Drew TC Power Nova | Reward: 0.00
+Round 1 | Team 1 | Drew TC Sabertooth | Reward: 0.00
+Round 1 | Team 1 | Casting TC Weakness | Reward: 0.00
+Round 1 | Team 2 | Casting Stun Block | Reward: 0.00
+Round 2 | Team 1 | Discarded Glacial Fortress [Ice] - 3 pips (Chance: 100%) | Reward: 0.00
+Round 2 | Team 1 | Discarded X [Balance] - 4 pips (Chance: 80%) | Reward: 0.00
+Round 2 | Team 1 | Discarded TC Power Nova [Balance] - 7 pips (Chance: 90%) | Reward: 0.00
+Round 2 | Team 1 | Discarded TC Sabertooth [Balance] - 10 pips (Chance: 80%) | Reward: 0.00
+Round 2 | Team 1 | Drew 2cards | Reward: 0.00
+Round 2 | Team 1 | Drew TC Legion-Shield | Reward: 0.00
+Round 2 | Team 1 | Drew TC Elemental Trap | Reward: 0.00
+Round 2 | Team 1 | Casting TC Legion-Shield | Reward: 0.00
+Round 2 | Team 2 | Casting Jinn’s Defense | Reward: 0.00
+Round 3 | Team 1 | Discarded Sandstorm [Balance] - 4 pips (Chance: 80%) | Reward: 0.00
+Round 3 | Team 1 | Discarded Jinn’s Defense [Myth] - 3 pips (Chance: 100%) | Reward: 0.00
+Round 3 | Team 1 | Discarded Mockenspiel [Balance] - 5 pips (Chance: 80%) | Reward: 0.00
+Round 3 | Team 1 | Discarded Wand-Hit [Balance] - 1 pips (Chance: 100%) | Reward: 0.00
+Round 3 | Team 1 | Discarded X [Balance] - 1 pips (Chance: 100%) | Reward: 0.00
+Round 3 | Team 1 | Drew 3cards | Reward: 0.00
+Round 3 | Team 1 | Drew TC Empower | Reward: 0.00
+Round 3 | Team 1 | Drew TC Elemental Shield | Reward: 0.00
+Round 3 | Team 1 | Drew TC Empower | Reward: 0.00
+Round 3 | Team 1 | Casting Stun Block | Reward: 0.00
+Round 3 | Team 2 | Casting TC Empower | Reward: 0.00
+Round 4 | Team 1 | Discarded Spectral Blast [Balance] - 4 pips (Chance: 85%) | Reward: 0.00
+Round 4 | Team 1 | Discarded X [Balance] - 8 pips (Chance: 85%) | Reward: 0.00
+Round 4 | Team 1 | Drew 2cards | Reward: 0.00
+Round 4 | Team 1 | Drew TC Blinding Light | Reward: 0.00
+Round 4 | Team 1 | Drew TC Elemental Shield | Reward: 0.00
+Round 4 | Team 1 | Casting pass | Reward: 0.00
+Round 4 | Team 2 | Casting pass | Reward: 0.00
+Round 5 | Team 1 | Discarded TC Empower [Death] - 0 pips (Chance: 100%) | Reward: 0.00
+Round 5 | Team 1 | Discarded TC Blinding Light [Myth] - 2 pips (Chance: 80%) | Reward: 0.00
+Round 5 | Team 1 | Discarded TC Elemental Trap [Balance] - 0 pips (Chance: 100%) | Reward: 0.00
+Round 5 | Team 1 | Discarded Jinn’s Defense [Myth] - 3 pips (Chance: 100%) | Reward: 0.00
+Round 5 | Team 1 | Drew 2cards | Reward: 0.00
+Round 5 | Team 1 | Drew TC Weakness | Reward: 0.00
+Round 5 | Team 1 | Drew TC Blinding Light | Reward: 0.00
+Round 5 | Team 1 | Casting TC Empower | Reward: 0.00
+Round 5 | Team 2 | Casting TC Infallible | Reward: 0.00
+Round 6 | Team 1 | Drew 0cards | Reward: 0.00
+Round 6 | Team 1 | Casting TC Blinding Light | Reward: 0.00
+Round 6 | Team 2 | Casting pass | Reward: 0.00
+Round 7 | Team 1 | Drew 0cards | Reward: 0.00
+Round 7 | Team 1 | Casting Power Nova | Reward: 0.00
+Round 7 | Team 2 | Casting TC Cleanse Charm | Reward: 0.00
+Round 8 | Team 1 | Drew 0cards | Reward: 0.00
+Round 8 | Team 1 | Casting TC Elemental Shield | Reward: 0.00
+Round 8 | Team 2 | Casting pass | Reward: 0.00
+Round 9 | Team 1 | Discarded TC Weakness [Balance] - 0 pips (Chance: 100%) | Reward: 0.00
+Round 9 | Team 1 | Discarded Judgement [Balance] - 0–14 pips (Chance: 85%) | Reward: 0.00
+Round 9 | Team 1 | Discarded Magnify [Astral] - 0 pips (Chance: 100%) | Reward: 0.00
+Round 9 | Team 1 | Discarded TC Elemental Shield [Balance] - 0 pips (Chance: 100%) | Reward: 0.00
+Round 9 | Team 1 | Discarded Stun Block [Ice] - 0 pips (Chance: 100%) | Reward: 0.00
+Round 9 | Team 1 | Discarded Duststorm Jinn [Balance] - 9 pips (Chance: 80%) | Reward: 0.00
+Round 9 | Team 1 | Drew 3cards | Reward: 0.00
+Round 9 | Team 1 | Drew TC Legion-Shield | Reward: 0.00
+Round 9 | Team 1 | Drew TC Legion-Shield | Reward: 0.00
+Round 9 | Team 1 | Drew TC Elemental Trap | Reward: 0.00
+Round 9 | Team 1 | Casting TC Legion-Shield | Reward: 0.00
+Round 9 | Team 2 | Casting TC Balance Blade | Reward: 0.00
+Round 10 | Team 1 | Discarded Glacial Fortress [Ice] - 3 pips (Chance: 100%) | Reward: 0.00
+Round 10 | Team 1 | Discarded X [Balance] - 7 pips (Chance: 85%) | Reward: 0.00
+Round 10 | Team 1 | Discarded Power Nova [Balance] - 7 pips (Chance: 85%) | Reward: 0.00
+Round 10 | Team 1 | Discarded X [Myth] - 3 pips (Chance: 100%) | Reward: 0.00
+Round 10 | Team 1 | Drew 4cards | Reward: 0.00
+Round 10 | Team 1 | Drew TC Empower | Reward: 0.00
+Round 10 | Team 1 | Drew TC Balance Blade | Reward: 0.00
+Round 10 | Team 1 | Drew TC Power Nova | Reward: 0.00
+Round 10 | Team 1 | Drew TC Empower | Reward: 0.00
+Round 10 | Team 1 | Casting TC Empower | Reward: 0.00
+Round 10 | Team 2 | Casting TC Infallible | Reward: 0.00
+Round 11 | Team 1 | Discarded TC Legion-Shield [Ice] - 1 pips (Chance: 100%) | Reward: 0.00
+Round 11 | Team 1 | Discarded Glacial Fortress [Ice] - 3 pips (Chance: 100%) | Reward: 0.00
+Round 11 | Team 1 | Discarded TC Elemental Trap [Balance] - 0 pips (Chance: 100%) | Reward: 0.00
+Round 11 | Team 1 | Discarded TC Balance Blade [Balance] - 0 pips (Chance: 100%) | Reward: 0.00
+Round 11 | Team 1 | Discarded TC Power Nova [Balance] - 7 pips (Chance: 90%) | Reward: 0.00
+Round 11 | Team 1 | Discarded TC Empower [Death] - 0 pips (Chance: 100%) | Reward: 0.00
+Round 11 | Team 1 | Discarded X [Balance] - 1 pips (Chance: 100%) | Reward: 0.00
+Round 11 | Team 1 | Drew 1cards | Reward: 0.00
+Round 11 | Team 1 | Drew TC Infallible | Reward: 0.00
+Round 11 | Team 1 | Casting pass | Reward: 0.00
+Round 11 | Team 2 | Casting pass | Reward: 0.00
+Round 12 | Team 1 | Discarded TC Infallible [Astral] - 0 pips (Chance: 100%) | Reward: 0.00
+Round 12 | Team 1 | Discarded Balance Blade [Balance] - 0 pips (Chance: 100%) | Reward: 0.00
+Round 12 | Team 1 | Discarded X [Ice] - 3 pips (Chance: 100%) | Reward: 0.00
+Round 12 | Team 1 | Discarded X [Balance] - 4 pips (Chance: 85%) | Reward: 0.00
+Round 12 | Team 1 | Discarded X [Myth] - 3 pips (Chance: 100%) | Reward: 0.00
+Round 12 | Team 1 | Drew 0cards | Reward: 0.00
+Round 12 | Team 1 | Casting pass | Reward: 0.00
+Round 12 | Team 2 | Casting TC Legion-Shield | Reward: 0.00
+Round 13 | Team 1 | Discarded Steel Giant [Balance] - 4 pips (Chance: 85%) | Reward: 0.00
+Round 13 | Team 1 | Discarded Jinn’s Fortune [Balance] - 3 pips (Chance: 100%) | Reward: 0.00
+Round 13 | Team 1 | Discarded Supernova [Balance] - 2 pips (Chance: 60%) | Reward: 0.00
+Round 13 | Team 1 | Discarded Oni’s Shadow [Balance] - 3 pips (Chance: 100%) | Reward: 0.00
+Round 13 | Team 1 | Drew 0cards | Reward: 0.00
+Round 13 | Team 1 | Casting Shadow Shrike | Reward: 0.00
+Round 13 | Team 2 | Casting TC Elemental Trap | Reward: 0.00
+Round 14 | Team 1 | Discarded Steel Giant [Balance] - 4 pips (Chance: 85%) | Reward: 0.00
+Round 14 | Team 1 | Discarded X [Balance] - 11 pips (Chance: 80%) | Reward: 0.00
+Round 14 | Team 1 | Drew 0cards | Reward: 0.00
+Round 14 | Team 1 | Casting Wand-Hit | Reward: 0.00
+Round 14 | Team 2 | Casting pass | Reward: 0.00
+Round 15 | Team 1 | Discarded Sabertooth [Balance] - 10 pips (Chance: 80%) | Reward: 0.00
+Round 15 | Team 1 | Drew 1cards | Reward: 0.00
+Round 15 | Team 1 | Drew TC Infallible | Reward: 0.00
+Round 15 | Team 1 | Casting TC Infallible | Reward: 0.00
+Round 15 | Team 2 | Casting Shadow Shrike | Reward: 0.00
+Round 16 | Team 1 | Discarded Mana Burn [Balance] - 5 pips (Chance: 80%) | Reward: 0.00
+Round 16 | Team 1 | Drew 0cards | Reward: 0.00
+Round 16 | Team 1 | Casting Wand-Hit | Reward: 0.00
+Round 16 | Team 2 | Casting TC Elemental Shield | Reward: 0.00
+Round 17 | Team 1 | Discarded Mana Burn [Balance] - 5 pips (Chance: 80%) | Reward: 0.00
+Round 17 | Team 1 | Drew 1cards | Reward: 0.00
+Round 17 | Team 1 | Drew TC Reshuffle | Reward: 0.00
+Round 17 | Team 1 | Casting Magnify | Reward: 0.00
+Round 17 | Team 2 | Casting pass | Reward: 0.00
+Round 18 | Team 1 | Discarded TC Reshuffle [Balance] - 4 pips (Chance: 100%) | Reward: 0.00
+Round 18 | Team 1 | Drew 0cards | Reward: 0.00
+Round 18 | Team 1 | Casting Donate Pip | Reward: 0.00
+Round 18 | Team 2 | Casting TC Weakness | Reward: 0.00
+Round 19 | Team 1 | Discarded Stun Block [Ice] - 0 pips (Chance: 100%) | Reward: 0.00
+Round 19 | Team 1 | Discarded Elemental Trap [Balance] - 1 pips (Chance: 100%) | Reward: 0.00
+Round 19 | Team 1 | Discarded Bladestorm [Balance] - 1 pips (Chance: 100%) | Reward: 0.00
+Round 19 | Team 1 | Discarded Balance Blade [Balance] - 0 pips (Chance: 100%) | Reward: 0.00
+Round 19 | Team 1 | Discarded Oni’s Shadow [Balance] - 3 pips (Chance: 100%) | Reward: 0.00
+Round 19 | Team 1 | Discarded Magnify [Astral] - 0 pips (Chance: 100%) | Reward: 0.00
+Round 19 | Team 1 | Discarded X [Astral] - 0 pips (Chance: 100%) | Reward: 0.00
+Round 19 | Team 1 | Drew 4cards | Reward: 0.00
+Round 19 | Team 1 | Drew TC Cleanse Charm | Reward: 0.00
+Round 19 | Team 1 | Drew TC Weakness | Reward: 0.00
+Round 19 | Team 1 | Drew TC Cleanse Charm | Reward: 0.00
+Round 19 | Team 1 | Drew TC Elemental Trap | Reward: 0.00
+Round 19 | Team 1 | Casting TC Cleanse Charm | Reward: 0.00
+Round 19 | Team 2 | Casting TC Empower | Reward: 0.00
+Round 20 | Team 1 | Discarded Mana Burn [Balance] - 5 pips (Chance: 80%) | Reward: 0.00
+Round 20 | Team 1 | Drew 1cards | Reward: 0.00
+Round 20 | Team 1 | Drew TC Empower | Reward: 0.00
+Round 20 | Team 1 | Casting Steel Giant | Reward: 0.00
+Round 20 | Team 2 | Casting Stun Block | Reward: 0.00
+Round 21 | Team 1 | Discarded Wand-Hit [Balance] - 1 pips (Chance: 100%) | Reward: 0.00
+Round 21 | Team 1 | Discarded Supernova [Balance] - 2 pips (Chance: 60%) | Reward: 0.00
+Round 21 | Team 1 | Discarded Supernova [Balance] - 2 pips (Chance: 60%) | Reward: 0.00
+Round 21 | Team 1 | Drew 0cards | Reward: 0.00
+Round 21 | Team 1 | Casting TC Cleanse Charm | Reward: 0.00
+Round 21 | Team 2 | Casting Wand-Hit | Reward: 0.00
+Round 22 | Team 1 | Discarded Power Nova [Balance] - 7 pips (Chance: 85%) | Reward: 0.00
+Round 22 | Team 1 | Discarded Sandstorm [Balance] - 4 pips (Chance: 80%) | Reward: 0.00
+Round 22 | Team 1 | Drew 0cards | Reward: 0.00
+Round 22 | Team 1 | Casting TC Empower | Reward: 0.00
+Round 22 | Team 2 | Casting TC Empower | Reward: 0.00
+Round 23 | Team 1 | Drew 0cards | Reward: 0.00
+Round 23 | Team 1 | Casting Elemental Trap | Reward: 0.00
+Round 23 | Team 2 | Casting Shadow Shrike | Reward: 0.00
+Round 24 | Team 1 | Discarded Power Nova [Balance] - 7 pips (Chance: 85%) | Reward: 0.00
+Round 24 | Team 1 | Discarded TC Weakness [Balance] - 0 pips (Chance: 100%) | Reward: 0.00
+Round 24 | Team 1 | Discarded X [Balance] - 1 pips (Chance: 100%) | Reward: 0.00
+Round 24 | Team 1 | Discarded TC Elemental Trap [Balance] - 0 pips (Chance: 100%) | Reward: 0.00
+Round 24 | Team 1 | Discarded X [Balance] - 1 pips (Chance: 100%) | Reward: 0.00
+Round 24 | Team 1 | Discarded X [Balance] - 1 pips (Chance: 100%) | Reward: 0.00
+Round 24 | Team 1 | Discarded Elemental Trap [Balance] - 1 pips (Chance: 100%) | Reward: 0.00
+Round 24 | Team 1 | Drew 0cards | Reward: 0.00
+Round 24 | Team 1 | Casting pass | Reward: 0.00
+Round 24 | Team 2 | Casting Jinn’s Fortune | Reward: 0.00
+Round 25 | Team 1 | Discarded Donate Pip [Balance] - 1 pips (Chance: 100%) | Reward: 0.00
+Round 25 | Team 1 | Discarded Sandstorm [Balance] - 4 pips (Chance: 80%) | Reward: 0.00
+Round 25 | Team 1 | Discarded Power Nova [Balance] - 7 pips (Chance: 85%) | Reward: 0.00
+Round 25 | Team 1 | Drew 0cards | Reward: 0.00
+Round 25 | Team 1 | Casting pass | Reward: 0.00
+Round 25 | Team 2 | WON | Reward: 0.00
+--------------------------------------------------------------------------------
+WINNER: Team 2 | Final Round: 25
+================================================================================
+
+================================================================================
+MATCH #4 - 2025-11-01T18:24:56.608607100
+================================================================================
+Team 1 (AI): Travis Waterblood (Balance)
+Team 2 (AI): Paul Duskglade (Balance)
+--------------------------------------------------------------------------------
+Round 1 | Team 1 | Discarded Sabertooth [Balance] - 10 pips (Chance: 80%) | Reward: 0.00
+Round 1 | Team 1 | Drew 0cards | Reward: 0.00
+Round 1 | Team 1 | Casting Glacial Fortress | Reward: 0.00
+Round 1 | Team 2 | Casting pass | Reward: 0.00
+Round 2 | Team 1 | Discarded Balance Blade [Balance] - 0 pips (Chance: 100%) | Reward: 0.00
+Round 2 | Team 1 | Discarded X [Balance] - 1 pips (Chance: 100%) | Reward: 0.00
+Round 2 | Team 1 | Discarded Duststorm Jinn [Balance] - 9 pips (Chance: 80%) | Reward: 0.00
+Round 2 | Team 1 | Discarded Elemental Trap [Balance] - 1 pips (Chance: 100%) | Reward: 0.00
+Round 2 | Team 1 | Discarded Judgement [Balance] - 0–14 pips (Chance: 85%) | Reward: 0.00
+Round 2 | Team 1 | Discarded X [Balance] - 5 pips (Chance: 80%) | Reward: 0.00
+Round 2 | Team 1 | Discarded Sandstorm [Balance] - 4 pips (Chance: 80%) | Reward: 0.00
+Round 2 | Team 1 | Drew 7cards | Reward: 0.00
+Round 2 | Team 1 | Drew TC Empower | Reward: 0.00
+Round 2 | Team 1 | Drew TC Legion-Shield | Reward: 0.00
+Round 2 | Team 1 | Drew TC Power Nova | Reward: 0.00
+Round 2 | Team 1 | Drew TC Blinding Light | Reward: 0.00
+Round 2 | Team 1 | Drew TC Infallible | Reward: 0.00
+Round 2 | Team 1 | Drew TC Empower | Reward: 0.00
+Round 2 | Team 1 | Drew TC Elemental Trap | Reward: 0.00
+Round 2 | Team 1 | Casting TC Empower | Reward: 0.00
+Round 2 | Team 2 | Casting TC Reshuffle | Reward: 0.00
+Round 3 | Team 1 | Discarded TC Power Nova [Balance] - 7 pips (Chance: 90%) | Reward: 0.00
+Round 3 | Team 1 | Drew 0cards | Reward: 0.00
+Round 3 | Team 1 | Casting TC Elemental Trap | Reward: 0.00
+Round 3 | Team 2 | Casting TC Weakness | Reward: 0.00
+Round 4 | Team 1 | Discarded Jinn’s Fortune [Balance] - 3 pips (Chance: 100%) | Reward: 0.00
+Round 4 | Team 1 | Discarded Duststorm Jinn [Balance] - 9 pips (Chance: 80%) | Reward: 0.00
+Round 4 | Team 1 | Drew 0cards | Reward: 0.00
+Round 4 | Team 1 | Casting pass | Reward: 0.00
+Round 4 | Team 2 | Casting TC Infallible | Reward: 0.00
+Round 5 | Team 1 | Discarded Glacial Fortress [Ice] - 3 pips (Chance: 100%) | Reward: 0.00
+Round 5 | Team 1 | Discarded TC Legion-Shield [Ice] - 1 pips (Chance: 100%) | Reward: 0.00
+Round 5 | Team 1 | Discarded Donate Pip [Balance] - 1 pips (Chance: 100%) | Reward: 0.00
+Round 5 | Team 1 | Discarded TC Blinding Light [Myth] - 2 pips (Chance: 80%) | Reward: 0.00
+Round 5 | Team 1 | Discarded TC Infallible [Astral] - 0 pips (Chance: 100%) | Reward: 0.00
+Round 5 | Team 1 | Discarded TC Empower [Death] - 0 pips (Chance: 100%) | Reward: 0.00
+Round 5 | Team 1 | Discarded X [Balance] - 1 pips (Chance: 100%) | Reward: 0.00
+Round 5 | Team 1 | Drew 1cards | Reward: 0.00
+Round 5 | Team 1 | Drew TC Reshuffle | Reward: 0.00
+Round 5 | Team 1 | Casting pass | Reward: 0.00
+Round 5 | Team 2 | Casting TC Empower | Reward: 0.00
+Round 6 | Team 1 | Discarded TC Reshuffle [Balance] - 4 pips (Chance: 100%) | Reward: 0.00
+Round 6 | Team 1 | Discarded Power Nova [Balance] - 7 pips (Chance: 85%) | Reward: 0.00
+Round 6 | Team 1 | Discarded Scion Of Balance [Balance] - 11 pips (Chance: 80%) | Reward: 0.00
+Round 6 | Team 1 | Discarded Sandstorm [Balance] - 4 pips (Chance: 80%) | Reward: 0.00
+Round 6 | Team 1 | Discarded X [Balance] - 5 pips (Chance: 80%) | Reward: 0.00
+Round 6 | Team 1 | Drew 6cards | Reward: 0.00
+Round 6 | Team 1 | Drew TC Legion-Shield | Reward: 0.00
+Round 6 | Team 1 | Drew TC Weakness | Reward: 0.00
+Round 6 | Team 1 | Drew TC Blinding Light | Reward: 0.00
+Round 6 | Team 1 | Drew TC Empower | Reward: 0.00
+Round 6 | Team 1 | Drew TC Elemental Shield | Reward: 0.00
+Round 6 | Team 1 | Drew TC Empower | Reward: 0.00
+Round 6 | Team 1 | Casting TC Blinding Light | Reward: 0.00
+Round 6 | Team 2 | Casting TC Empower | Reward: 0.00
+Round 7 | Team 1 | Discarded TC Legion-Shield [Ice] - 1 pips (Chance: 100%) | Reward: 0.00
+Round 7 | Team 1 | Discarded Jinn’s Defense [Myth] - 3 pips (Chance: 100%) | Reward: 0.00
+Round 7 | Team 1 | Discarded Wand-Hit [Balance] - 1 pips (Chance: 100%) | Reward: 0.00
+Round 7 | Team 1 | Drew 0cards | Reward: 0.00
+Round 7 | Team 1 | Casting pass | Reward: 0.00
+Round 7 | Team 2 | Casting TC Legion-Shield | Reward: 0.00
+Round 8 | Team 1 | Discarded Power Nova [Balance] - 7 pips (Chance: 85%) | Reward: 0.00
+Round 8 | Team 1 | Discarded TC Weakness [Balance] - 0 pips (Chance: 100%) | Reward: 0.00
+Round 8 | Team 1 | Discarded Ra [Balance] - 8 pips (Chance: 85%) | Reward: 0.00
+Round 8 | Team 1 | Discarded TC Empower [Death] - 0 pips (Chance: 100%) | Reward: 0.00
+Round 8 | Team 1 | Discarded TC Elemental Shield [Balance] - 0 pips (Chance: 100%) | Reward: 0.00
+Round 8 | Team 1 | Discarded TC Empower [Death] - 0 pips (Chance: 100%) | Reward: 0.00
+Round 8 | Team 1 | Discarded X [Shadow] - 0 pips (Chance: 100%) | Reward: 0.00
+Round 8 | Team 1 | Drew 0cards | Reward: 0.00
+Round 8 | Team 1 | Casting pass | Reward: 0.00
+Round 8 | Team 2 | Casting Supernova | Reward: 0.00
+Round 9 | Team 1 | Discarded Power Nova [Balance] - 7 pips (Chance: 85%) | Reward: 0.00
+Round 9 | Team 1 | Drew 0cards | Reward: 0.00
+Round 9 | Team 1 | Casting pass | Reward: 0.00
+Round 9 | Team 2 | Casting TC Elemental Shield | Reward: 0.00
+Round 10 | Team 1 | Discarded Spectral Blast [Balance] - 4 pips (Chance: 85%) | Reward: 0.00
+Round 10 | Team 1 | Discarded Steel Giant [Balance] - 4 pips (Chance: 85%) | Reward: 0.00
+Round 10 | Team 1 | Discarded Sandstorm [Balance] - 4 pips (Chance: 80%) | Reward: 0.00
+Round 10 | Team 1 | Discarded Mana Burn [Balance] - 5 pips (Chance: 80%) | Reward: 0.00
+Round 10 | Team 1 | Discarded Power Nova [Balance] - 7 pips (Chance: 85%) | Reward: 0.00
+Round 10 | Team 1 | Drew 2cards | Reward: 0.00
+Round 10 | Team 1 | Drew TC Sabertooth | Reward: 0.00
+Round 10 | Team 1 | Drew TC Empower | Reward: 0.00
+Round 10 | Team 1 | Casting TC Empower | Reward: 0.00
+Round 10 | Team 2 | Casting TC Elemental Trap | Reward: 0.00
+Round 11 | Team 1 | Discarded TC Sabertooth [Balance] - 10 pips (Chance: 80%) | Reward: 0.00
+Round 11 | Team 1 | Discarded Wand-Hit [Balance] - 1 pips (Chance: 100%) | Reward: 0.00
+Round 11 | Team 1 | Discarded Glacial Fortress [Ice] - 3 pips (Chance: 100%) | Reward: 0.00
+Round 11 | Team 1 | Discarded X [Balance] - 1 pips (Chance: 100%) | Reward: 0.00
+Round 11 | Team 1 | Discarded X [Balance] - 4 pips (Chance: 85%) | Reward: 0.00
+Round 11 | Team 1 | Discarded Magnify [Astral] - 0 pips (Chance: 100%) | Reward: 0.00
+Round 11 | Team 1 | Discarded X [Myth] - 3 pips (Chance: 100%) | Reward: 0.00
+Round 11 | Team 1 | Drew 5cards | Reward: 0.00
+Round 11 | Team 1 | Drew TC Weakness | Reward: 0.00
+Round 11 | Team 1 | Drew TC Cleanse Charm | Reward: 0.00
+Round 11 | Team 1 | Drew TC Balance Blade | Reward: 0.00
+Round 11 | Team 1 | Drew TC Infallible | Reward: 0.00
+Round 11 | Team 1 | Drew TC Elemental Trap | Reward: 0.00
+Round 11 | Team 1 | Casting TC Weakness | Reward: 0.00
+Round 11 | Team 2 | Casting pass | Reward: 0.00
+Round 12 | Team 1 | Discarded Oni’s Shadow [Balance] - 3 pips (Chance: 100%) | Reward: 0.00
+Round 12 | Team 1 | Discarded Mana Burn [Balance] - 5 pips (Chance: 80%) | Reward: 0.00
+Round 12 | Team 1 | Drew 2cards | Reward: 0.00
+Round 12 | Team 1 | Drew TC Legion-Shield | Reward: 0.00
+Round 12 | Team 1 | Drew TC Legion-Shield | Reward: 0.00
+Round 12 | Team 1 | Casting TC Elemental Trap | Reward: 0.00
+Round 12 | Team 2 | Casting TC Sabertooth | Reward: 0.00
+Round 13 | Team 1 | Discarded TC Legion-Shield [Ice] - 1 pips (Chance: 100%) | Reward: 0.00
+Round 13 | Team 1 | Discarded Glacial Fortress [Ice] - 3 pips (Chance: 100%) | Reward: 0.00
+Round 13 | Team 1 | Drew 1cards | Reward: 0.00
+Round 13 | Team 1 | Drew TC Elemental Shield | Reward: 0.00
+Round 13 | Team 1 | Casting TC Balance Blade | Reward: 0.00
+Round 13 | Team 2 | Casting TC Reshuffle | Reward: 0.00
+Round 14 | Team 1 | Discarded TC Elemental Shield [Balance] - 0 pips (Chance: 100%) | Reward: 0.00
+Round 14 | Team 1 | Discarded TC Cleanse Charm [Storm] - 0 pips (Chance: 100%) | Reward: 0.00
+Round 14 | Team 1 | Discarded Steel Giant [Balance] - 4 pips (Chance: 85%) | Reward: 0.00
+Round 14 | Team 1 | Discarded TC Infallible [Astral] - 0 pips (Chance: 100%) | Reward: 0.00
+Round 14 | Team 1 | Discarded Stun Block [Ice] - 0 pips (Chance: 100%) | Reward: 0.00
+Round 14 | Team 1 | Discarded TC Legion-Shield [Ice] - 1 pips (Chance: 100%) | Reward: 0.00
+Round 14 | Team 1 | Drew 3cards | Reward: 0.00
+Round 14 | Team 1 | Drew TC Cleanse Charm | Reward: 0.00
+Round 14 | Team 1 | Drew TC Power Nova | Reward: 0.00
+Round 14 | Team 1 | Drew TC Elemental Shield | Reward: 0.00
+Round 14 | Team 1 | Casting TC Elemental Shield | Reward: 0.00
+Round 14 | Team 2 | Casting TC Weakness | Reward: 0.00
+Round 15 | Team 1 | Discarded TC Cleanse Charm [Storm] - 0 pips (Chance: 100%) | Reward: 0.00
+Round 15 | Team 1 | Discarded TC Power Nova [Balance] - 7 pips (Chance: 90%) | Reward: 0.00
+Round 15 | Team 1 | Discarded Power Nova [Balance] - 7 pips (Chance: 85%) | Reward: 0.00
+Round 15 | Team 1 | Discarded Sandstorm [Balance] - 4 pips (Chance: 80%) | Reward: 0.00
+Round 15 | Team 1 | Drew 0cards | Reward: 0.00
+Round 15 | Team 1 | Casting pass | Reward: 0.00
+Round 15 | Team 2 | Casting TC Infallible | Reward: 0.00
+Round 16 | Team 1 | Discarded Balance Blade [Balance] - 0 pips (Chance: 100%) | Reward: 0.00
+Round 16 | Team 1 | Discarded Steel Giant [Balance] - 4 pips (Chance: 85%) | Reward: 0.00
+Round 16 | Team 1 | Discarded Duststorm Jinn [Balance] - 9 pips (Chance: 80%) | Reward: 0.00
+Round 16 | Team 1 | Discarded Magnify [Astral] - 0 pips (Chance: 100%) | Reward: 0.00
+Round 16 | Team 1 | Discarded X [Balance] - 3 pips (Chance: 100%) | Reward: 0.00
+Round 16 | Team 1 | Discarded X [Myth] - 3 pips (Chance: 100%) | Reward: 0.00
+Round 16 | Team 1 | Discarded X [Astral] - 0 pips (Chance: 100%) | Reward: 0.00
+Round 16 | Team 1 | Drew 0cards | Reward: 0.00
+Round 16 | Team 1 | Casting pass | Reward: 0.00
+Round 16 | Team 2 | Casting pass | Reward: 0.00
+Round 17 | Team 1 | Discarded Oni’s Shadow [Balance] - 3 pips (Chance: 100%) | Reward: 0.00
+Round 17 | Team 1 | Discarded Reshuffle [Balance] - 4 pips (Chance: 100%) | Reward: 0.00
+Round 17 | Team 1 | Drew 0cards | Reward: 0.00
+Round 17 | Team 1 | Casting Wand-Hit | Reward: 0.00
+Round 17 | Team 2 | Casting TC Elemental Trap | Reward: 0.00
+Round 18 | Team 1 | Discarded Wand-Hit [Balance] - 1 pips (Chance: 100%) | Reward: 0.00
+Round 18 | Team 1 | Discarded X [Myth] - 3 pips (Chance: 100%) | Reward: 0.00
+Round 18 | Team 1 | Discarded Elemental Trap [Balance] - 1 pips (Chance: 100%) | Reward: 0.00
+Round 18 | Team 1 | Discarded X [Balance] - 1 pips (Chance: 100%) | Reward: 0.00
+Round 18 | Team 1 | Drew 0cards | Reward: 0.00
+Round 18 | Team 1 | Casting Stun Block | Reward: 0.00
+Round 18 | Team 2 | Casting TC Weakness | Reward: 0.00
+Round 19 | Team 1 | Discarded Power Nova [Balance] - 7 pips (Chance: 85%) | Reward: 0.00
+Round 19 | Team 1 | Discarded Stun Block [Ice] - 0 pips (Chance: 100%) | Reward: 0.00
+Round 19 | Team 1 | Discarded X [Ice] - 0 pips (Chance: 100%) | Reward: 0.00
+Round 19 | Team 1 | Discarded X [Balance] - 2 pips (Chance: 60%) | Reward: 0.00
+Round 19 | Team 1 | Drew 0cards | Reward: 0.00
+Round 19 | Team 1 | Casting Shadow Shrike | Reward: 0.00
+Round 19 | Team 2 | Casting TC Blinding Light | Reward: 0.00
+Round 20 | Team 1 | Discarded Bladestorm [Balance] - 1 pips (Chance: 100%) | Reward: 0.00
+Round 20 | Team 1 | Discarded Donate Pip [Balance] - 1 pips (Chance: 100%) | Reward: 0.00
+Round 20 | Team 1 | Drew 0cards | Reward: 0.00
+Round 20 | Team 1 | Casting pass | Reward: 0.00
+Round 20 | Team 2 | WON | Reward: 0.00
+--------------------------------------------------------------------------------
+WINNER: Team 2 | Final Round: 20
+================================================================================
+

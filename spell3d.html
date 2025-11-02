@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Three.js Spell Animation</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    html, body { margin:0; height:100%; background:#0b0d13; overflow:hidden; }
+    #overlay { position:fixed; top:12px; left:12px; color:#cfd8ff; font:14px/1.4 system-ui, sans-serif; opacity:.85 }
+    a { color:#9fc5ff; text-decoration:none }
+  </style>
+</head>
+<body>
+<div id="overlay">Click to cast ✨</div>
+
+<script type="module">
+import * as THREE from "https://unpkg.com/three@0.160.0/build/three.module.js";
+
+let scene, camera, renderer;
+let projectile, trail, trailPositions, trailAges, trailMax = 300;
+let targetZ = -30, casting = false, t = 0;
+
+// --- Scene / Camera / Renderer ---
+scene = new THREE.Scene();
+scene.fog = new THREE.FogExp2(0x0b0d13, 0.06);
+
+camera = new THREE.PerspectiveCamera(60, innerWidth/innerHeight, 0.1, 200);
+camera.position.set(0, 1.5, 8);
+
+renderer = new THREE.WebGLRenderer({ antialias:true, powerPreference:"high-performance" });
+renderer.setSize(innerWidth, innerHeight);
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+document.body.appendChild(renderer.domElement);
+
+// --- Lights ---
+const hemi = new THREE.HemisphereLight(0xaaccff, 0x223344, 0.6);
+scene.add(hemi);
+const key = new THREE.DirectionalLight(0xffffff, 0.3);
+key.position.set(3, 5, 4);
+scene.add(key);
+
+// --- Ground plane for depth ---
+const ground = new THREE.Mesh(
+  new THREE.PlaneGeometry(200, 200),
+  new THREE.MeshStandardMaterial({ color:0x0f1220, roughness:1, metalness:0 })
+);
+ground.rotation.x = -Math.PI/2;
+ground.position.y = -1.2;
+scene.add(ground);
+
+// --- “Caster”: a simple pillar ---
+const caster = new THREE.Mesh(
+  new THREE.CylinderGeometry(0.3, 0.3, 1.6, 32),
+  new THREE.MeshStandardMaterial({ color:0x334055, roughness:0.8 })
+);
+caster.position.set(0, -0.4, 4.5);
+scene.add(caster);
+
+// --- Target dummy ---
+const target = new THREE.Mesh(
+  new THREE.TorusKnotGeometry(0.6, 0.18, 120, 16),
+  new THREE.MeshStandardMaterial({ color:0x263248, roughness:0.7, metalness:0.2 })
+);
+target.position.set(0, 0, targetZ);
+scene.add(target);
+
+// --- Create projectile (glowing sphere with a point light) ---
+function makeProjectile() {
+  const mat = new THREE.MeshStandardMaterial({
+    color: 0x88b4ff,
+    emissive: 0x4c90ff,
+    emissiveIntensity: 1.8,
+    roughness: 0.3,
+    metalness: 0.1
+  });
+  const mesh = new THREE.Mesh(new THREE.SphereGeometry(0.18, 32, 32), mat);
+  mesh.position.set(0, 0.6, 3.2);
+  const glow = new THREE.PointLight(0x6aa8ff, 1.6, 8, 2.0);
+  mesh.add(glow);
+  return mesh;
+}
+
+// --- Particle trail (Points) ---
+function makeTrail() {
+  const geom = new THREE.BufferGeometry();
+  trailPositions = new Float32Array(trailMax * 3);
+  trailAges = new Float32Array(trailMax);
+  geom.setAttribute("position", new THREE.BufferAttribute(trailPositions, 3));
+  const colors = new Float32Array(trailMax * 3);
+  for (let i=0;i<trailMax;i++){ colors[i*3]=0.55; colors[i*3+1]=0.75; colors[i*3+2]=1.0; }
+  geom.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+  const sizes = new Float32Array(trailMax).fill(6);
+  geom.setAttribute("size", new THREE.BufferAttribute(sizes, 1));
+
+  const mat = new THREE.PointsMaterial({
+    color: 0xffffff,
+    size: 0.06,
+    vertexColors: true,
+    transparent: true,
+    opacity: 0.9,
+    depthWrite: false
+  });
+  return new THREE.Points(geom, mat);
+}
+
+// --- Explosion particles at impact ---
+function burstAt(pos) {
+  const count = 120;
+  const geom = new THREE.BufferGeometry();
+  const positions = new Float32Array(count*3);
+  const velocities = new Float32Array(count*3);
+  const colors = new Float32Array(count*3);
+  const alphas = new Float32Array(count);
+  for (let i=0;i<count;i++){
+    positions[i*3] = pos.x; positions[i*3+1] = pos.y; positions[i*3+2] = pos.z;
+    // random outward velocity
+    const dir = new THREE.Vector3(
+      (Math.random()*2-1),
+      (Math.random()*2-1),
+      (Math.random()*2-1)
+    ).normalize().multiplyScalar(2 + Math.random()*2);
+    velocities[i*3] = dir.x; velocities[i*3+1] = dir.y; velocities[i*3+2] = dir.z;
+    colors[i*3]=0.7; colors[i*3+1]=0.85; colors[i*3+2]=1.0;
+    alphas[i] = 1.0;
+  }
+  geom.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+  geom.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+
+  const mat = new THREE.PointsMaterial({ size: 0.08, vertexColors: true, transparent: true, opacity: 1.0, depthWrite:false });
+  const points = new THREE.Points(geom, mat);
+  scene.add(points);
+
+  // animate & auto-remove
+  const start = performance.now();
+  function explodeStep(now){
+    const dt = Math.min(0.033, (now - (explodeStep.last||now))/1000);
+    explodeStep.last = now;
+    // integrate
+    for (let i=0;i<count;i++){
+      positions[i*3]   += velocities[i*3]*dt;
+      positions[i*3+1] += velocities[i*3+1]*dt - 0.98*dt*0.2; // tiny gravity
+      positions[i*3+2] += velocities[i*3+2]*dt;
+      // fade
+      alphas[i] = Math.max(0, 1 - (now - start)/600);
+    }
+    geom.attributes.position.needsUpdate = true;
+    mat.opacity = Math.max(0, 1 - (now - start)/600);
+
+    if (now - start < 650) requestAnimationFrame(explodeStep);
+    else scene.remove(points);
+  }
+  requestAnimationFrame(explodeStep);
+}
+
+// --- Casting state ---
+function cast() {
+  if (casting) return;
+  casting = true;
+  t = 0;
+
+  projectile = makeProjectile();
+  scene.add(projectile);
+
+  trail = makeTrail();
+  scene.add(trail);
+}
+
+// --- Animation loop ---
+const clock = new THREE.Clock();
+
+function animate() {
+  requestAnimationFrame(animate);
+  const dt = Math.min(0.033, clock.getDelta());
+
+  // idle target wobble
+  target.rotation.y += dt*0.6;
+  target.rotation.x = Math.sin(performance.now()*0.001)*0.2;
+
+  if (casting && projectile) {
+    // move forward & bob a little
+    projectile.position.z -= dt * 12;
+    projectile.position.y = 0.6 + Math.sin(performance.now()*0.02)*0.05;
+
+    // trail: push newest head, fade old
+    // shift arrays down by 1 (cheap ring buffer could be better, but this is simple)
+    for (let i = trailMax-1; i > 0; i--) {
+      const j = i*3, k=(i-1)*3;
+      trailPositions[j]   = trailPositions[k];
+      trailPositions[j+1] = trailPositions[k+1];
+      trailPositions[j+2] = trailPositions[k+2];
+      trailAges[i] = Math.min(1, trailAges[i-1] + dt*1.8);
+    }
+    // head position
+    trailPositions[0] = projectile.position.x;
+    trailPositions[1] = projectile.position.y;
+    trailPositions[2] = projectile.position.z;
+    trailAges[0] = 0;
+
+    // fade by age
+    const geom = trail.geometry;
+    const posAttr = geom.getAttribute("position");
+    posAttr.needsUpdate = true;
+    const mat = trail.material;
+    mat.opacity = 0.3 + 0.6 * Math.abs(Math.sin(performance.now()*0.004));
+
+    // impact?
+    if (projectile.position.z <= targetZ + 0.2) {
+      burstAt(projectile.position.clone());
+      scene.remove(projectile);
+      scene.remove(trail);
+      projectile = null;
+      trail = null;
+      casting = false;
+    }
+  }
+
+  renderer.render(scene, camera);
+}
+animate();
+
+// --- Interaction ---
+addEventListener("click", cast);
+addEventListener("resize", () => {
+  camera.aspect = innerWidth/innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+public void startRound() {
+        System.out.println("Team 1's turn.");
+
+        if(t1Wizards.size() == 1) {
+            Wizard w = t1Wizards.get(0);
+            System.out.println(w.getIdentity() + " wizard " + w.getName());
+            System.out.println("Pips: " + w.getPips());
+            String pipsByCount = "";
+            if(initial == 1) {
+                pipsByCount = w.getPipsByCount(initial);
+                initial = 0; 
+            } else {
+                pipsByCount = w.getPipsByCount();
+            }
+            System.out.println("Pips By Count: " + pipsByCount);
+            System.out.println("Health: " + w.getStatsInformation().getHealth());
+            Deck mainDeck = w.getMainDeck();
+            Deck tcDeck = w.getTcDeck();
+
+            List<Spell> mainDeckSpells = mainDeck.getSpells();
+            List<Spell> tcDeckSpells = tcDeck.getSpells();
+
+            Random r = new Random();
+
+            while (chosen.size() < number) {
+                int num = r.nextInt(mainDeckSpells.size());
+                if(mainDeckSpells.get(num).getName().equals("X")) {
+                    continue;
+                }
+                chosen.add(num);
+            }
+
+                // if you need them as a list:
+            List<Integer> handIndices = new ArrayList<>(chosen);
+
+            
+            Scanner sc = new Scanner(System.in);
+
+            if(firstIteration) {
+                 System.out.println("SPELLS FOR: " + w.getName());
+                    for (int i = 0; i < handIndices.size(); i++) {
+                    System.out.println("SPELL " + (i + 1) + ": " + mainDeckSpells.get(handIndices.get(i)).getName());
+                    activeHand.add(mainDeckSpells.get(handIndices.get(i)));
+                }
+            }
+            else {
+                for (int i = 0; i < handIndices.size(); i++) {
+                    activeHand.add(mainDeckSpells.get(handIndices.get(i)));
+                }
+                for(int i = 0; i < activeHand.size(); i++) {
+                    System.out.println("SPELL " + (i+1) + ": " + activeHand.get(i).getName());
+                }
+            }
+
+                System.out.println("Select which cards to discard (enter numbers separated by spaces):");
+
+                String line = sc.nextLine();
+
+                // split by spaces
+                String[] parts = line.trim().split("\\s+");
+
+                // convert to integers
+                List<Integer> discardIndices = new ArrayList<>();
+                for (String part : parts) {
+                try {
+                    int num = Integer.parseInt(part);
+                    if (num >= 1 && num <= handIndices.size()) {
+                        discardIndices.add(num - 1); // store as 0-based index
+                  }
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid input: " + part);
+                }
+            }
+
+                // now remove those cards
+                for (int i = 0; i < discardIndices.size(); i++) {
+                    int idx = discardIndices.get(i);
+                    int index = handIndices.get(idx);
+                    Spell spell = mainDeckSpells.get(index);
+                    spell.setName("X"); 
+                    mainDeckSpells.set(index, spell);
+                    Spell activeSpell = activeHand.get(idx);
+                    activeSpell.setName("X");
+                    activeHand.set(idx, spell);
+                    chosen.remove(index);
+                }
+
+                System.out.println("Remaining cards:");
+
+                /*for (int i = 0; i < handIndices.size(); i++) {
+                    System.out.println("SPELL " + (i + 1) + ": " + mainDeckSpells.get(handIndices.get(i)).getName());
+                }*/
+
+                for(int i = 0; i < activeHand.size(); i++) {
+                    System.out.println("SPELL " + (i + 1) + ": " + activeHand.get(i).getName());
+                }
+
+                Scanner scanner = new Scanner(System.in);
+                boolean check = true;
+                 Random r1 = new Random();
+                Set<Integer> selected = new HashSet<>();
+                while(check) {
+                    System.out.println("Select how many cards to draw: " + "0-" + discardIndices.size());
+                    int number = sc.nextInt(); 
+                    if(number < 0 || number > discardIndices.size()) {
+                        System.out.println("Invalid number of cards to draw. Please try again");
+                        check = true;
+                    }
+                    else {
+                        while (selected.size() < number) {
+                            selected.add(r.nextInt(tcDeckSpells.size()));
+                        }
+                        check = false;
+                    }
+                }
+                
+                List<Integer> drawnIndices = new ArrayList<>(selected);
+                
+                for(int i = 0; i < drawnIndices.size(); i++) {
+                    Spell spell = tcDeckSpells.get(drawnIndices.get(i));
+                    activeHand.set(discardIndices.get(i), spell); 
+                    chosen.add(drawnIndices.get(i));
+                }
+
+                System.out.println("Current hand after drawing");
+                for(int i = 0; i < activeHand.size(); i++) {
+                    System.out.println("SPELL " + (i + 1) + ": " + activeHand.get(i).getName());
+                }
+                
+                int activeHandSize = 0; 
+                for(int i = 0; i < activeHand.size(); i++) {
+                    if(activeHand.get(i).getName().equals("X")) {
+                        continue;
+                    }
+                    else {
+                        activeHandSize++;
+                    }
+                }
+                number = 7 - activeHandSize;
+
+            System.out.println("Checking to see whether next pip is a regular pip or power pip based on power pip percentage.");
+            int powerPipPercentage = w.getStatsInformation().getPowerPip();
+            Random rand = new Random();
+            int roll = rand.nextInt(100);
+            if(roll < powerPipPercentage) {
+                System.out.println("You got a power pip!");
+                int initialPips = w.getPips();
+                w.setPips(initialPips+2);
+                pipsByCount  = "2|" + ": 1 power pip" + pipsByCount;
+                w.setPipsByCount(pipsByCount);
+            }
+            else {
+                System.out.println("You got a regular pip!");
+                int initialPips = w.getPips();
+                w.setPips(initialPips+1);
+                pipsByCount  = "1|" + ": 1 regular pip" + pipsByCount;
+                w.setPipsByCount(pipsByCount);
+            }
+
+        }
+        else if(t1Wizards.size() == 2) {
+            Wizard w1 = t1Wizards.get(0); 
+            Wizard w2 = t1Wizards.get(1);
+        }
+        else if(t1Wizards.size() == 3) {
+            Wizard w1 = t1Wizards.get(0); 
+            Wizard w2 = t1Wizards.get(1);
+            Wizard w3 = t1Wizards.get(2);
+        }
+        else if(t1Wizards.size() == 4) {
+            Wizard w1 = t1Wizards.get(0); 
+            Wizard w2 = t1Wizards.get(1);
+            Wizard w3 = t1Wizards.get(2);
+            Wizard w4 = t1Wizards.get(3);
+        }
+
+        System.out.println("Team 2's turn.");
+
+        for(Wizard w: t2Wizards) {
+
+        }
+    }

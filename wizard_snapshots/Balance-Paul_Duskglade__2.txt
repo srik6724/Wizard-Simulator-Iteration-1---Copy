@@ -1,0 +1,136 @@
+=== Balance-Paul Duskglade #2 ===
+
+Name: Paul Duskglade
+Identity (School): Balance
+Pips: 5
+
+== Stats ==
+Health: 11443
+Damage: {storm=7, myth=7, death=7, balance=181, shadow=7, fire=7, ice=49, life=27}
+Resist: {storm=88, myth=66, death=66, balance=66, shadow=66, fire=66, ice=66, life=66}
+Accuracy: {storm=0, myth=0, death=0, balance=28, shadow=0, fire=0, ice=0, life=0}
+Critical: {storm=0, myth=0, death=0, balance=636, shadow=0, fire=0, ice=0, life=0}
+Block: {storm=587, myth=587, death=587, balance=587, shadow=587, fire=587, ice=587, life=587}
+Pierce: {storm=2, myth=2, death=2, balance=45, shadow=2, fire=2, ice=2, life=2}
+Stun Resist: 0
+Incoming: 0
+Outgoing: 0
+Pip Conversion: {storm=0, myth=0, death=0, balance=914, fire=0, ice=0, life=0}
+Power Pip %: 112
+Shadow Pip Rating: 84
+Archmastery Rating: 133
+
+== Main Deck ==
+ 1) Glacial Fortress  (pips=3, chance=100, school=Ice)
+ 2) Glacial Fortress  (pips=3, chance=100, school=Ice)
+ 3) Glacial Fortress  (pips=3, chance=100, school=Ice)
+ 4) Glacial Fortress  (pips=3, chance=100, school=Ice)
+ 5) Stun Block  (pips=0, chance=100, school=Ice)
+ 6) Stun Block  (pips=0, chance=100, school=Ice)
+ 7) Stun Block  (pips=0, chance=100, school=Ice)
+ 8) Stun Block  (pips=0, chance=100, school=Ice)
+ 9) Jinn’s Defense  (pips=3, chance=100, school=Myth)
+10) Jinn’s Defense  (pips=3, chance=100, school=Myth)
+11) Jinn’s Defense  (pips=3, chance=100, school=Myth)
+12) Jinn’s Defense  (pips=3, chance=100, school=Myth)
+13) Magnify  (pips=0, chance=100, school=Astral)
+14) Magnify  (pips=0, chance=100, school=Astral)
+15) Magnify  (pips=0, chance=100, school=Astral)
+16) Magnify  (pips=0, chance=100, school=Astral)
+17) Balance Blade  (pips=0, chance=100, school=Balance)
+18) Balance Blade  (pips=0, chance=100, school=Balance)
+19) Bladestorm  (pips=1, chance=100, school=Balance)
+20) Bladestorm  (pips=1, chance=100, school=Balance)
+21) Donate Pip  (pips=1, chance=100, school=Balance)
+22) Donate Pip  (pips=1, chance=100, school=Balance)
+23) Scion Of Balance  (pips=11, chance=80, school=Balance)
+24) Duststorm Jinn  (pips=9, chance=80, school=Balance)
+25) Duststorm Jinn  (pips=9, chance=80, school=Balance)
+26) Duststorm Jinn  (pips=9, chance=80, school=Balance)
+27) Judgement  (pips=0, chance=85, school=Balance)
+28) Mana Burn  (pips=5, chance=80, school=Balance)
+29) Mana Burn  (pips=5, chance=80, school=Balance)
+30) Mana Burn  (pips=5, chance=80, school=Balance)
+31) Mockenspiel  (pips=5, chance=80, school=Balance)
+32) Power Nova  (pips=7, chance=85, school=Balance)
+33) Power Nova  (pips=7, chance=85, school=Balance)
+34) Power Nova  (pips=7, chance=85, school=Balance)
+35) Power Nova  (pips=7, chance=85, school=Balance)
+36) Power Nova  (pips=7, chance=85, school=Balance)
+37) Power Nova  (pips=7, chance=85, school=Balance)
+38) Ra  (pips=8, chance=85, school=Balance)
+39) Jinn’s Fortune  (pips=3, chance=100, school=Balance)
+40) Oni’s Shadow  (pips=3, chance=100, school=Balance)
+41) Oni’s Shadow  (pips=3, chance=100, school=Balance)
+42) Oni’s Shadow  (pips=3, chance=100, school=Balance)
+43) Reshuffle  (pips=4, chance=100, school=Balance)
+44) Sabertooth  (pips=10, chance=80, school=Balance)
+45) Sandstorm  (pips=10, chance=80, school=Balance)
+46) Sandstorm  (pips=4, chance=80, school=Balance)
+47) Sandstorm  (pips=4, chance=80, school=Balance)
+48) Sandstorm  (pips=4, chance=80, school=Balance)
+49) Spectral Blast  (pips=4, chance=85, school=Balance)
+50) Steel Giant  (pips=4, chance=85, school=Balance)
+51) Steel Giant  (pips=4, chance=85, school=Balance)
+52) Steel Giant  (pips=4, chance=85, school=Balance)
+53) Steel Giant  (pips=4, chance=85, school=Balance)
+54) Supernova  (pips=2, chance=60, school=Balance)
+55) Supernova  (pips=2, chance=60, school=Balance)
+56) Supernova  (pips=2, chance=60, school=Balance)
+57) Elemental Trap  (pips=1, chance=100, school=Balance)
+58) Elemental Trap  (pips=1, chance=100, school=Balance)
+59) Elemental Trap  (pips=1, chance=100, school=Balance)
+60) Elemental Trap  (pips=1, chance=100, school=Balance)
+61) Shadow Shrike  (pips=0, chance=100, school=Shadow)
+62) Shadow Shrike  (pips=0, chance=100, school=Shadow)
+63) Wand-Hit  (pips=1, chance=100, school=Balance)
+64) Wand-Hit  (pips=1, chance=100, school=Balance)
+65) Wand-Hit  (pips=1, chance=100, school=Balance)
+66) Wand-Hit  (pips=1, chance=100, school=Balance)
+
+== TC Deck ==
+ 1) TC Legion-Shield  (pips=1, chance=100, school=Ice)
+ 2) TC Legion-Shield  (pips=1, chance=100, school=Ice)
+ 3) TC Legion-Shield  (pips=1, chance=100, school=Ice)
+ 4) TC Legion-Shield  (pips=1, chance=100, school=Ice)
+ 5) TC Legion-Shield  (pips=1, chance=100, school=Ice)
+ 6) TC Blinding Light  (pips=2, chance=80, school=Myth)
+ 7) TC Blinding Light  (pips=2, chance=80, school=Myth)
+ 8) TC Blinding Light  (pips=2, chance=80, school=Myth)
+ 9) TC Infallible  (pips=0, chance=100, school=Astral)
+10) TC Infallible  (pips=0, chance=100, school=Astral)
+11) TC Infallible  (pips=0, chance=100, school=Astral)
+12) TC Empower  (pips=0, chance=100, school=Death)
+13) TC Empower  (pips=0, chance=100, school=Death)
+14) TC Empower  (pips=0, chance=100, school=Death)
+15) TC Empower  (pips=0, chance=100, school=Death)
+16) TC Empower  (pips=0, chance=100, school=Death)
+17) TC Empower  (pips=0, chance=100, school=Death)
+18) TC Empower  (pips=0, chance=100, school=Death)
+19) TC Cleanse Charm  (pips=0, chance=100, school=Storm)
+20) TC Cleanse Charm  (pips=0, chance=100, school=Storm)
+21) TC Balance Blade  (pips=0, chance=100, school=Balance)
+22) TC Balance Blade  (pips=0, chance=100, school=Balance)
+23) TC Power Nova  (pips=7, chance=90, school=Balance)
+24) TC Power Nova  (pips=7, chance=90, school=Balance)
+25) TC Reshuffle  (pips=4, chance=100, school=Balance)
+26) TC Sabertooth  (pips=10, chance=80, school=Balance)
+27) TC Elemental Shield  (pips=0, chance=100, school=Balance)
+28) TC Elemental Shield  (pips=0, chance=100, school=Balance)
+29) TC Elemental Shield  (pips=0, chance=100, school=Balance)
+30) TC Elemental Trap  (pips=0, chance=100, school=Balance)
+31) TC Elemental Trap  (pips=0, chance=100, school=Balance)
+32) TC Elemental Trap  (pips=0, chance=100, school=Balance)
+33) TC Weakness  (pips=0, chance=100, school=Balance)
+34) TC Weakness  (pips=0, chance=100, school=Balance)
+35) TC Weakness  (pips=0, chance=100, school=Balance)
+36) TC Weakness  (pips=0, chance=100, school=Balance)
+
+== Current Effects/Charms/Shields ==
+Positive Charms: []
+Negative Charms: []
+Weaknesses: []
+Shields: []
+Traps: []
+Aura: None
+Effects: []

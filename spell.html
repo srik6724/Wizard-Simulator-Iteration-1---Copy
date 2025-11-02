@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Zero-Dependency Spell Animation</title>
+<style>
+  html,body {height:100%; margin:0; background:#0a0f1a; overflow:hidden; font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial}
+  #ui {position:fixed; left:12px; bottom:12px; color:#9fb7ff; font-size:12px; opacity:.9; user-select:none}
+  #ui kbd{background:#111a; border:1px solid #4458; padding:2px 6px; border-radius:4px; font-family:monospace}
+  canvas {display:block; width:100vw; height:100vh}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div id="ui">
+  Click: cast spell • <kbd>Space</kbd> slow-mo • <kbd>R</kbd> reset camera
+</div>
+<script>
+(() => {
+  const canvas = document.getElementById('c');
+  const ctx = canvas.getContext('2d');
+  let W=0,H=0; const DPR = Math.min(2, window.devicePixelRatio||1);
+  function resize(){
+    W = Math.floor(innerWidth * DPR);
+    H = Math.floor(innerHeight * DPR);
+    canvas.width = W; canvas.height = H;
+  }
+  addEventListener('resize', resize, {passive:true}); resize();
+
+  // ------- Utilities -------
+  const TAU = Math.PI*2;
+  const rnd = (a=1,b=0)=>Math.random()*(a-b)+b;
+  const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+  const lerp=(a,b,t)=>a+(b-a)*t;
+  const easeOutExpo=t=>t===1?1:1-Math.pow(2,-10*t);
+  const easeOutCubic=t=>1-Math.pow(1-t,3);
+  const easeInOutQuad=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+
+  // ------- Camera shake -------
+  const camera = { x:0, y:0, shakeMag:0, shakeT:0 };
+  function addShake(power=10, dur=400){
+    camera.shakeMag = Math.max(camera.shakeMag, power);
+    camera.shakeT = Math.max(camera.shakeT, performance.now()+dur);
+  }
+  function applyCamera(t){
+    const now = t;
+    let m = 0;
+    if (now < camera.shakeT){
+      const left = camera.shakeT - now;
+      const k = clamp(left/400,0,1);
+      m = camera.shakeMag * k * (0.5 + 0.5*Math.sin(now*0.05));
+    }
+    camera.x = rnd(-m, m);
+    camera.y = rnd(-m, m);
+  }
+
+  // ------- Particles -------
+  class Particle {
+    constructor(x,y, vx,vy, life, size, hue, sat=100, light=60, add=1){
+      Object.assign(this,{x,y,vx,vy, life, maxLife:life, size, hue, sat, light, add});
+      this.spin = rnd(-2,2);
+      this.drag = rnd(0.96,0.985);
+      this.gravity = rnd(0.02,0.06);
+    }
+    step(dt){
+      this.vx *= this.drag;
+      this.vy = this.vy*this.drag + this.gravity*dt*0.06;
+      this.x += this.vx*dt;
+      this.y += this.vy*dt;
+      this.size *= 0.996;
+      this.life -= dt;
+      return this.life>0 && this.size>0.5;
+    }
+    draw(ctx){
+      const t = this.life/this.maxLife;
+      ctx.globalCompositeOperation = this.add>0 ? 'lighter' : 'source-over';
+      ctx.globalAlpha = clamp(t*1.2,0,1);
+      const r = this.size;
+      const g = ctx.createRadialGradient(this.x,this.y,0,this.x,this.y,r*3);
+      g.addColorStop(0,`hsla(${this.hue},${this.sat}%,${this.light}%,.9)`);
+      g.addColorStop(0.4,`hsla(${this.hue},${this.sat}%,${this.light-10}%,.6)`);
+      g.addColorStop(1,`hsla(${this.hue},${this.sat}%,${this.light-30}%,0)`);
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(this.x,this.y,r*3,0,TAU); ctx.fill();
+      ctx.globalAlpha = 1;
+    }
+  }
+
+  // ------- Shockwave ring -------
+  class Shockwave {
+    constructor(x,y, hue){
+      this.x=x; this.y=y; this.t=0; this.hue=hue;
+      this.maxR = Math.hypot(W,H)*0.3;
+      this.life=650; this.start=performance.now();
+    }
+    step(now){
+      this.t = clamp((now-this.start)/this.life,0,1);
+      return this.t<1;
+    }
+    draw(ctx){
+      const r = easeOutExpo(this.t) * this.maxR;
+      ctx.globalCompositeOperation='lighter';
+      ctx.lineWidth = lerp(8*DPR,1*DPR,this.t);
+      ctx.strokeStyle = `hsla(${this.hue},100%,75%,${1-this.t})`;
+      ctx.beginPath(); ctx.arc(this.x,this.y,r,0,TAU); ctx.stroke();
+      ctx.globalCompositeOperation='source-over';
+    }
+  }
+
+  // ------- Rune (caster circle) -------
+  class Rune {
+    constructor(x,y,hue){
+      this.x=x; this.y=y; this.hue=hue; this.t=0; this.alive=true;
+      this.start=performance.now();
+    }
+    step(now){
+      this.t = clamp((now-this.start)/900,0,1);
+      if (this.t>=1) this.alive=false;
+      return this.alive;
+    }
+    draw(ctx){
+      const t=this.t;
+      const r = 60*DPR + easeOutExpo(t)*40*DPR;
+      ctx.save();
+      ctx.translate(this.x,this.y);
+      ctx.rotate(performance.now()*0.002);
+      ctx.globalCompositeOperation='lighter';
+      // Outer glow
+      ctx.strokeStyle = `hsla(${this.hue},100%,70%,${1-t})`;
+      ctx.lineWidth = 3*DPR;
+      ctx.beginPath(); ctx.arc(0,0,r,0,TAU); ctx.stroke();
+      // Glyph spokes
+      const spokes=8;
+      for(let i=0;i<spokes;i++){
+        const a = (i/spokes)*TAU;
+        const k = easeOutCubic(t);
+        ctx.beginPath();
+        ctx.moveTo(Math.cos(a)*r*0.4, Math.sin(a)*r*0.4);
+        ctx.lineTo(Math.cos(a)*r*k, Math.sin(a)*r*k);
+        ctx.stroke();
+      }
+      // Inner pulse
+      ctx.globalAlpha = 0.6*(1-t);
+      ctx.fillStyle = `hsla(${this.hue},100%,60%,.5)`;
+      ctx.beginPath(); ctx.arc(0,0,r*0.35*(1+0.2*Math.sin(performance.now()*0.01)),0,TAU); ctx.fill();
+      ctx.restore();
+      ctx.globalCompositeOperation='source-over';
+      ctx.globalAlpha=1;
+    }
+  }
+
+  // ------- Projectile with trail -------
+  class Projectile {
+    constructor(x0,y0,x1,y1, hue){
+      this.x=x0; this.y=y0; this.x0=x0; this.y0=y0; this.x1=x1; this.y1=y1;
+      this.hue=hue; this.t=0; this.life=750; this.start=performance.now();
+      this.trail=[];
+      // Generate a subtle arc path control point
+      const midx = (x0+x1)/2 + rnd(-60,60)*DPR;
+      const midy = (y0+y1)/2 - rnd(80,160)*DPR;
+      this.ctrl = {x:midx, y:midy};
+      this.speed = rnd(0.9,1.1);
+    }
+    step(now){
+      const u = clamp((now-this.start)/(this.life/this.speed),0,1);
+      this.t = u;
+      // Quadratic Bezier
+      const {x0,y0,x1,y1,ctrl} = this;
+      const ax = lerp(x0, ctrl.x, u);
+      const ay = lerp(y0, ctrl.y, u);
+      const bx = lerp(ctrl.x, x1, u);
+      const by = lerp(ctrl.y, y1, u);
+      this.x = lerp(ax, bx, u);
+      this.y = lerp(ay, by, u);
+
+      this.trail.push({x:this.x, y:this.y, t:performance.now()});
+      if (this.trail.length>50) this.trail.shift();
+      return u<1;
+    }
+    draw(ctx){
+      // Trail glow
+      ctx.globalCompositeOperation='lighter';
+      for (let i=0;i<this.trail.length;i++){
+        const p = this.trail[i];
+        const age = clamp((performance.now()-p.t)/300,0,1);
+        const s = (1-age)*16*DPR;
+        ctx.globalAlpha = (1-age)*0.7;
+        const g = ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,s*3);
+        g.addColorStop(0,`hsla(${this.hue},100%,70%,.9)`);
+        g.addColorStop(1,`hsla(${this.hue},100%,50%,0)`);
+        ctx.fillStyle=g;
+        ctx.beginPath(); ctx.arc(p.x,p.y,s*3,0,TAU); ctx.fill();
+      }
+      ctx.globalAlpha=1;
+
+      // Core orb
+      const r = 10*DPR;
+      const g = ctx.createRadialGradient(this.x,this.y,0,this.x,this.y,r*3);
+      g.addColorStop(0,`hsla(${this.hue},100%,90%,1)`);
+      g.addColorStop(0.4,`hsla(${this.hue},100%,70%,.9)`);
+      g.addColorStop(1,`hsla(${this.hue},100%,50%,0)`);
+      ctx.fillStyle=g;
+      ctx.beginPath(); ctx.arc(this.x,this.y,r*3,0,TAU); ctx.fill();
+      ctx.globalCompositeOperation='source-over';
+    }
+  }
+
+  // ------- Post-effect: brief chromatic aberration on impact -------
+  let aberrationUntil = 0;
+  function chromaticAberrationPass(){
+    if (performance.now() > aberrationUntil) return;
+    const off = Math.floor(2*DPR);
+    const img = ctx.getImageData(0,0,W,H);
+    // cheap shift: draw channel-tinted copies with small offset
+    ctx.globalCompositeOperation='screen';
+    ctx.globalAlpha=0.6;
+    // Red
+    ctx.putImageData(img, off, 0);
+    ctx.fillStyle = 'rgba(255,0,0,0.07)'; ctx.fillRect(0,0,W,H);
+    // Blue
+    ctx.putImageData(img, -off, 0);
+    ctx.fillStyle = 'rgba(0,128,255,0.07)'; ctx.fillRect(0,0,W,H);
+    ctx.globalAlpha=1;
+    ctx.globalCompositeOperation='source-over';
+  }
+
+  // ------- World / casting -------
+  const actors = [];      // particles, runes, shockwaves, projectiles
+  const groundHue = 220;  // cool blue base
+  let slowMo = false;
+
+  function castSpell(atX,atY){
+    const casterX = W*0.2, casterY = H*0.65;
+    const hue = rnd(190,220); // icy blue
+    // Rune & charge
+    actors.push(new Rune(casterX, casterY, hue));
+    // Delay a hair for timing
+    setTimeout(()=>{
+      const proj = new Projectile(casterX, casterY, atX, atY, hue);
+      actors.push(proj);
+      // Sporadic sparkle emit along path
+      const sparkTimer = setInterval(()=>{
+        if (proj.t>=1){ clearInterval(sparkTimer); return; }
+        for(let i=0;i<4;i++){
+          const a = rnd(0,TAU);
+          const s = rnd(0.6,1.8)*DPR;
+          actors.push(new Particle(proj.x, proj.y, Math.cos(a)*rnd(0.6,2), Math.sin(a)*rnd(0.6,2), rnd(220,420), rnd(2,5)*DPR, hue, 100, 70, 1));
+        }
+      }, 25);
+      // Impact when projectile finishes
+      const watch = setInterval(()=>{
+        if (proj.t>=1){
+          clearInterval(watch);
+          impact(atX,atY,hue);
+        }
+      }, 16);
+    }, 200);
+  }
+
+  function impact(x,y,hue){
+    // Shockwave & shake
+    actors.push(new Shockwave(x,y,hue));
+    addShake(18*DPR, 450);
+    aberrationUntil = performance.now() + 120;
+
+    // Big burst + embers
+    for (let i=0;i<80;i++){
+      const ang=rnd(0,TAU), sp=rnd(2,8);
+      actors.push(new Particle(x,y, Math.cos(ang)*sp, Math.sin(ang)*sp, rnd(300,700), rnd(3,7)*DPR, hue, 100, 70, 1));
+    }
+    for (let i=0;i<50;i++){
+      const ang=rnd(0,TAU), sp=rnd(0.5,2);
+      const p = new Particle(x,y, Math.cos(ang)*sp, Math.sin(ang)*sp, rnd(600,1200), rnd(1.5,3)*DPR, hue+20, 100, 55, 1);
+      p.gravity = rnd(0.06,0.12); p.drag = rnd(0.985,0.995);
+      actors.push(p);
+    }
+  }
+
+  // ------- Input -------
+  canvas.addEventListener('pointerdown', e=>{
+    const rect = canvas.getBoundingClientRect();
+    const x = (e.clientX - rect.left) * DPR;
+    const y = (e.clientY - rect.top) * DPR;
+    castSpell(x,y);
+  }, {passive:true});
+
+  addEventListener('keydown', e=>{
+    if (e.code==='Space'){ slowMo = !slowMo; }
+    if (e.key==='r' || e.key==='R'){ camera.shakeMag=0; camera.shakeT=0; }
+  });
+
+  // ------- Ground decoration (circles) -------
+  function drawGround(ctx,t){
+    const g = ctx.createLinearGradient(0,0,0,H);
+    g.addColorStop(0,'#0a0f1a'); g.addColorStop(1,'#0b1220');
+    ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+
+    ctx.save();
+    ctx.translate(W/2, H*0.82);
+    ctx.globalAlpha=0.35;
+    ctx.strokeStyle=`hsla(${groundHue},30%,60%,.75)`;
+    for (let i=0;i<6;i++){
+      const r = (i+1)*90*DPR;
+      ctx.lineWidth = 2*DPR;
+      ctx.beginPath(); ctx.arc(0,0,r,0,TAU); ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  // ------- Main loop -------
+  let last = performance.now();
+  function frame(now){
+    const dtMs = Math.min(32, now-last) * (slowMo ? 0.35 : 1);
+    const dt = dtMs; // ms-based step for our simple dampers
+    last = now;
+
+    applyCamera(now);
+
+    drawGround(ctx, now);
+
+    // Camera transform
+    ctx.save();
+    ctx.translate(camera.x, camera.y);
+
+    // Step/draw actors
+    for (let i=actors.length-1;i>=0;i--){
+      const a = actors[i];
+      const alive = a.step ? a.step(now) : true;
+      if (!alive) { actors.splice(i,1); continue; }
+      a.draw && a.draw(ctx);
+    }
+
+    // Subtle vignette
+    const vign = ctx.createRadialGradient(W/2, H/2, Math.min(W,H)*0.25, W/2, H/2, Math.max(W,H)*0.7);
+    vign.addColorStop(0, 'rgba(0,0,0,0)');
+    vign.addColorStop(1, 'rgba(0,0,0,0.35)');
+    ctx.fillStyle=vign; ctx.fillRect(0,0,W,H);
+
+    ctx.restore();
+
+    // Post-effect
+    chromaticAberrationPass();
+
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+
+  // Cast one automatically to demo
+  setTimeout(()=>castSpell(W*0.7, H*0.4), 500);
+})();
+</script>
+</body>
+</html>

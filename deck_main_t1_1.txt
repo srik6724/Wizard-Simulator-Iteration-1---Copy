@@ -1,0 +1,67 @@
+Main Deck
+Glacial Fortress,3,100,Ice
+Glacial Fortress,3,100,Ice
+Glacial Fortress,3,100,Ice
+Glacial Fortress,3,100,Ice
+Stun Block,0,100,Ice
+Stun Block,0,100,Ice
+Stun Block,0,100,Ice
+Stun Block,0,100,Ice
+Jinn’s Defense,3,100,Myth
+Jinn’s Defense,3,100,Myth
+Jinn’s Defense,3,100,Myth
+Jinn’s Defense,3,100,Myth
+Magnify,0,100,Astral
+Magnify,0,100,Astral
+Magnify,0,100,Astral
+Magnify,0,100,Astral
+Balance Blade,0,100,Balance
+Balance Blade,0,100,Balance
+Bladestorm,1,100,Balance
+Bladestorm,1,100,Balance
+Donate Pip,1,100,Balance
+Donate Pip,1,100,Balance
+Scion Of Balance,11,80,Balance
+Duststorm Jinn,9,80,Balance
+Duststorm Jinn,9,80,Balance
+Duststorm Jinn,9,80,Balance
+Judgement,X,85,Balance
+Mana Burn,5,80,Balance
+Mana Burn,5,80,Balance
+Mana Burn,5,80,Balance
+Mockenspiel,5,80,Balance
+Power Nova,7,85,Balance
+Power Nova,7,85,Balance
+Power Nova,7,85,Balance
+Power Nova,7,85,Balance
+Power Nova,7,85,Balance
+Power Nova,7,85,Balance
+Ra,8,85,Balance
+Jinn’s Fortune,3,100,Balance
+Oni’s Shadow,3,100,Balance
+Oni’s Shadow,3,100,Balance
+Oni’s Shadow,3,100,Balance
+Reshuffle,4,100,Balance
+Sabertooth,10,80,Balance
+Sandstorm,4,80,Balance
+Sandstorm,4,80,Balance
+Sandstorm,4,80,Balance
+Sandstorm,4,80,Balance
+Spectral Blast,4,85,Balance
+Steel Giant,4,85,Balance
+Steel Giant,4,85,Balance
+Steel Giant,4,85,Balance
+Steel Giant,4,85,Balance
+Supernova,2,60,Balance
+Supernova,2,60,Balance
+Supernova,2,60,Balance
+Elemental Trap,1,100,Balance
+Elemental Trap,1,100,Balance
+Elemental Trap,1,100,Balance
+Elemental Trap,1,100,Balance
+Shadow Shrike,0,100,Shadow
+Shadow Shrike,0,100,Shadow
+Wand-Hit,1,100,Balance
+Wand-Hit,1,100,Balance
+Wand-Hit,1,100,Balance
+Wand-Hit,1,100,Balance

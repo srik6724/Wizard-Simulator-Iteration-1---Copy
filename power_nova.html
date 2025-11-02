@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Wizard PvP — Power Nova Demo (Three.js)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    html, body { margin:0; height:100%; background:#0b0d13; overflow:hidden; }
+    #ui {
+      position:fixed; inset:0; pointer-events:none; font:14px/1.2 system-ui, sans-serif; color:#e6edff;
+    }
+    .bar {
+      position:absolute; top:12px; width:40vw; height:16px; background:#1a2030; border-radius:10px;
+      box-shadow: 0 0 0 1px #28324a inset, 0 0 15px rgba(80,120,255,.2);
+    }
+    .bar .fill {
+      height:100%; width:100%; background:linear-gradient(90deg, #54ffa8, #2ee5ff);
+      border-radius:10px; transition:width .35s ease;
+      box-shadow: 0 0 10px #3ef6ff, 0 0 20px rgba(46,229,255,.4);
+    }
+    .bar.left  { left:12px;  transform-origin:left center; }
+    .bar.right { right:12px; transform-origin:right center; }
+    .name {
+      position:absolute; top:-18px; font-weight:600; letter-spacing:.2px; opacity:.9;
+      text-shadow:0 1px 0 #000;
+    }
+    .left .name { left:0 }
+    .right .name { right:0; text-align:right }
+
+    #hint { position:fixed; left:12px; bottom:12px; color:#a8b6ff; opacity:.85 }
+  </style>
+</head>
+<body>
+<div id="ui">
+  <div class="bar left">
+    <div class="name">Caster</div>
+    <div class="fill" id="hp1"></div>
+  </div>
+  <div class="bar right">
+    <div class="name">Opponent</div>
+    <div class="fill" id="hp2"></div>
+  </div>
+  <div id="hint">Click or press <b>Space</b> to cast Power Nova ✨</div>
+</div>
+
+<script type="module">
+import * as THREE from "https://unpkg.com/three@0.160.0/build/three.module.js";
+
+////////////////////////////////////////////////////////////////
+// Basic scene
+////////////////////////////////////////////////////////////////
+const scene = new THREE.Scene();
+scene.fog = new THREE.FogExp2(0x0b0d13, 0.06);
+
+const camera = new THREE.PerspectiveCamera(60, innerWidth/innerHeight, 0.1, 400);
+camera.position.set(0, 3.5, 12);
+camera.lookAt(0, 0.8, 0);
+
+const renderer = new THREE.WebGLRenderer({ antialias:true, powerPreference:"high-performance" });
+renderer.setSize(innerWidth, innerHeight);
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+document.body.appendChild(renderer.domElement);
+
+const hemi = new THREE.HemisphereLight(0xaaccff, 0x1a2030, 0.8);
+scene.add(hemi);
+const key = new THREE.DirectionalLight(0xffffff, 0.7);
+key.position.set(5, 8, 4);
+scene.add(key);
+
+////////////////////////////////////////////////////////////////
+// Arena
+////////////////////////////////////////////////////////////////
+const arena = new THREE.Group();
+scene.add(arena);
+
+// Floor ring
+const ring = new THREE.Mesh(
+  new THREE.CylinderGeometry(6.8, 6.8, 0.2, 96, 1, true),
+  new THREE.MeshStandardMaterial({ color:0x101523, roughness:0.95, metalness:0.05, side:THREE.DoubleSide })
+);
+ring.position.y = -1.1;
+ring.rotation.x = Math.PI/2;
+arena.add(ring);
+
+// Floor disc
+const floor = new THREE.Mesh(
+  new THREE.CircleGeometry(6.6, 96),
+  new THREE.MeshStandardMaterial({ color:0x0f1424, roughness:1 })
+);
+floor.rotation.x = -Math.PI/2;
+floor.position.y = -1.0;
+arena.add(floor);
+
+// Simple runes
+const runeMat = new THREE.MeshBasicMaterial({ color:0x567bff, transparent:true, opacity:0.2 });
+for (let i=0;i<6;i++){
+  const rune = new THREE.Mesh(new THREE.RingGeometry(0.9, 1.05, 48), runeMat);
+  rune.rotation.x = -Math.PI/2;
+  rune.position.y = -0.99;
+  rune.position.z = -0.2;
+  rune.position.x = Math.cos(i*Math.PI/3)*3.8;
+  rune.position.z = Math.sin(i*Math.PI/3)*3.8;
+  rune.lookAt(0,-1,0);
+  arena.add(rune);
+}
+
+////////////////////////////////////////////////////////////////
+// Wizards (simple stylized geometry)
+////////////////////////////////////////////////////////////////
+function makeWizard(color=0x4aa3ff){
+  const g = new THREE.Group();
+
+  // robe
+  const robe = new THREE.Mesh(
+    new THREE.ConeGeometry(0.9, 2, 6),
+    new THREE.MeshStandardMaterial({ color: color, roughness: 0.85, metalness: 0.1 })
+  );
+  robe.position.y = 0;
+  g.add(robe);
+
+  // torso
+  const torso = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.45, 0.55, 1.2, 16),
+    new THREE.MeshStandardMaterial({ color:0x2b3a57, roughness:0.8 })
+  );
+  torso.position.y = 0.8;
+  g.add(torso);
+
+  // head
+  const head = new THREE.Mesh(
+    new THREE.SphereGeometry(0.28, 24, 16),
+    new THREE.MeshStandardMaterial({ color:0xffe0bd, roughness:0.6 })
+  );
+  head.position.y = 1.6;
+  g.add(head);
+
+  // hat
+  const hat = new THREE.Mesh(
+    new THREE.ConeGeometry(0.5, 0.9, 16),
+    new THREE.MeshStandardMaterial({ color:0x1c2540, roughness:0.8 })
+  );
+  hat.position.y = 2.05;
+  g.add(hat);
+
+  // arm + wand (right arm)
+  const arm = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.08, 0.1, 0.9, 12),
+    new THREE.MeshStandardMaterial({ color:0x2b3a57, roughness:0.8 })
+  );
+  arm.position.set(0.55, 1.1, 0);
+  arm.rotation.z = -Math.PI/5;
+  g.add(arm);
+
+  const wand = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.03, 0.03, 1.2, 8),
+    new THREE.MeshStandardMaterial({ color:0x7a5a2b, roughness:0.6 })
+  );
+  wand.position.set(0.95, 1.0, 0);
+  wand.rotation.z = -Math.PI/3;
+
+  const tip = new THREE.Mesh(
+    new THREE.SphereGeometry(0.06, 12, 12),
+    new THREE.MeshStandardMaterial({ color:0x9fd6ff, emissive:0x5ab8ff, emissiveIntensity:1.2 })
+  );
+  tip.position.set(0, 0.6, 0);
+  wand.add(tip);
+
+  // an empty as a precise wand-tip anchor
+  const wandTip = new THREE.Object3D();
+  wandTip.position.copy(tip.position);
+  wand.add(wandTip);
+  g.add(wand);
+
+  g.userData = { wand, wandTip, baseRot: g.rotation.y };
+  return g;
+}
+
+const wizardL = makeWizard(0x5ea8ff);
+wizardL.position.set(-3.2, 0, 1.1);
+wizardL.rotation.y = Math.PI * 0.08;
+scene.add(wizardL);
+
+const wizardR = makeWizard(0xff6961);
+wizardR.position.set(3.2, 0, -1.1);
+wizardR.rotation.y = Math.PI + Math.PI * 0.08;
+scene.add(wizardR);
+
+////////////////////////////////////////////////////////////////
+// Health bars (DOM)
+////////////////////////////////////////////////////////////////
+const hpEl1 = document.getElementById("hp1");
+const hpEl2 = document.getElementById("hp2");
+const maxHP = 1000;
+let hp1 = maxHP;
+let hp2 = maxHP;
+function updateHP(){
+  hpEl1.style.width = Math.max(0, (hp1/maxHP)*100) + "%";
+  hpEl2.style.width = Math.max(0, (hp2/maxHP)*100) + "%";
+}
+updateHP();
+
+////////////////////////////////////////////////////////////////
+// Utilities
+////////////////////////////////////////////////////////////////
+function lerp(a,b,t){ return a + (b-a)*t; }
+function easeOutCubic(t){ return 1 - Math.pow(1-t, 3); }
+function easeInOutQuad(t){ return t<.5 ? 2*t*t : 1 - Math.pow(-2*t+2,2)/2; }
+
+function screenShake(intensity=0.08, ms=250){
+  const start = performance.now();
+  const base = camera.position.clone();
+  function step(t){
+    const e = (t - start) / ms;
+    if (e >= 1){
+      camera.position.copy(base);
+      return;
+    }
+    const amt = intensity * (1 - e);
+    camera.position.x = base.x + (Math.random()*2-1)*amt;
+    camera.position.y = base.y + (Math.random()*2-1)*amt*0.6;
+    requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+function addFloatingDamage(text, worldPos, color=0xfff2a6){
+  const div = document.createElement("div");
+  div.textContent = text;
+  div.style.position = "fixed";
+  div.style.color = "#ffd27a";
+  div.style.font = "bold 18px/1.1 system-ui, sans-serif";
+  div.style.textShadow = "0 1px 0 #000, 0 0 8px rgba(255,215,120,.8)";
+  div.style.pointerEvents = "none";
+  div.style.transform = "translate(-50%,-50%)";
+  div.style.opacity = "1";
+  document.body.appendChild(div);
+
+  const start = performance.now();
+  const dur = 900;
+
+  function place(){
+    const p = worldPos.clone().project(camera);
+    const x = (p.x * 0.5 + 0.5) * innerWidth;
+    const y = (-p.y * 0.5 + 0.5) * innerHeight;
+    div.style.left = x + "px";
+    div.style.top  = y + "px";
+  }
+
+  function step(t){
+    const e = Math.min(1, (t - start)/dur);
+    div.style.opacity = String(1 - e);
+    div.style.transform = `translate(-50%,-50%) translateY(${-40*easeOutCubic(e)}px)`;
+    place();
+    if (e < 1) requestAnimationFrame(step);
+    else div.remove();
+  }
+  place();
+  requestAnimationFrame(step);
+}
+
+////////////////////////////////////////////////////////////////
+// Spell: Power Nova (stylized)
+// Phases:
+// 0. Wand lift (caster)
+// 1. Projectile from wandTip → center
+// 2. Nova glyph & shockwave burst at center
+// 3. Apply damage, hit FX on defender
+////////////////////////////////////////////////////////////////
+
+let casting = false;
+
+function castPowerNova({ from=wizardL, to=wizardR, damage=260 } = {}){
+  if (casting) return;
+  casting = true;
+
+  // 0) wand lift + glow charge
+  const wand = from.userData.wand;
+  const tip  = from.userData.wandTip;
+  const startRot = wand.rotation.z;
+  const targetRot = startRot - Math.PI/6;
+
+  // small charge glow at wand tip
+  const charge = new THREE.PointLight(0x7cc8ff, 1.6, 6, 2);
+  wand.add(charge);
+  charge.position.copy(tip.position);
+
+  const t0 = performance.now();
+  const liftMs = 350;
+
+  // projectile (hidden until phase 1)
+  const proj = new THREE.Mesh(
+    new THREE.SphereGeometry(0.16, 24, 24),
+    new THREE.MeshStandardMaterial({ color:0x9fd6ff, emissive:0x5ab8ff, emissiveIntensity:1.5 })
+  );
+  proj.visible = false;
+  scene.add(proj);
+
+  // 1) path to center
+  const center = new THREE.Vector3(0, 0.5, 0);
+
+  // 2) impact visuals
+  const burstGroup = new THREE.Group();
+  scene.add(burstGroup);
+
+  // ring glyph
+  const glyph = new THREE.Mesh(
+    new THREE.RingGeometry(0.8, 1.05, 64),
+    new THREE.MeshBasicMaterial({ color:0x87b3ff, transparent:true, opacity:0.85 })
+  );
+  glyph.rotation.x = -Math.PI/2;
+  glyph.position.copy(center).setY(-0.95);
+  glyph.visible = false;
+  burstGroup.add(glyph);
+
+  // vertical pillar
+  const pillar = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.3, 0.3, 2.6, 24),
+    new THREE.MeshBasicMaterial({ color:0x9ad0ff, transparent:true, opacity:0.0 })
+  );
+  pillar.position.copy(center).setY(0.5);
+  pillar.visible = false;
+  burstGroup.add(pillar);
+
+  // shockwave torus
+  const shock = new THREE.Mesh(
+    new THREE.TorusGeometry(1.2, 0.12, 16, 128),
+    new THREE.MeshBasicMaterial({ color:0xcbe2ff, transparent:true, opacity:0.0 })
+  );
+  shock.rotation.x = -Math.PI/2;
+  shock.position.copy(center).setY(-0.95);
+  shock.visible = false;
+  burstGroup.add(shock);
+
+  // spark particles
+  const sparkCount = 160;
+  const pPos = new Float32Array(sparkCount*3);
+  const pVel = new Float32Array(sparkCount*3);
+  for (let i=0;i<sparkCount;i++){
+    pPos[i*3] = center.x;
+    pPos[i*3+1] = center.y;
+    pPos[i*3+2] = center.z;
+    const dir = new THREE.Vector3((Math.random()*2-1),(Math.random()*2-1),(Math.random()*2-1)).normalize()
+      .multiplyScalar(2 + Math.random()*1.8);
+    pVel[i*3] = dir.x; pVel[i*3+1] = dir.y; pVel[i*3+2] = dir.z;
+  }
+  const pGeom = new THREE.BufferGeometry();
+  pGeom.setAttribute("position", new THREE.BufferAttribute(pPos, 3));
+  const pMat = new THREE.PointsMaterial({ size:0.06, color:0x9ad0ff, transparent:true, opacity:0.0, depthWrite:false });
+  const sparks = new THREE.Points(pGeom, pMat);
+  sparks.visible = false;
+  burstGroup.add(sparks);
+
+  // state machine
+  let phase = 0;
+  let phaseStart = t0;
+
+  function updateSpell(now){
+    const dt = Math.min(0.033, (now - (updateSpell.last || now)) / 1000);
+    updateSpell.last = now;
+
+    if (phase === 0){
+      // wand lift + charge brighten
+      const e = Math.min(1, (now - phaseStart)/liftMs);
+      wand.rotation.z = lerp(startRot, targetRot, easeOutCubic(e));
+      charge.intensity = 1.2 + e*1.5;
+
+      if (e >= 1){
+        // move to phase 1
+        phase = 1;
+        phaseStart = now;
+
+        // start projectile
+        const tipWorld = tip.getWorldPosition(new THREE.Vector3());
+        proj.position.copy(tipWorld);
+        proj.visible = true;
+      }
+    }
+    else if (phase === 1){
+      // move projectile to center
+      const moveMs = 450;
+      const e = Math.min(1, (now - phaseStart)/moveMs);
+      const tipWorld = tip.getWorldPosition(new THREE.Vector3());
+      proj.position.lerpVectors(tipWorld, center, easeInOutQuad(e));
+
+      // slight scale pulsation
+      const s = 1 + Math.sin(now*0.02)*0.06;
+      proj.scale.setScalar(s);
+
+      if (e >= 1){
+        // impact reached
+        scene.remove(proj);
+
+        // enable burst visuals
+        glyph.visible = pillar.visible = shock.visible = sparks.visible = true;
+        pMat.opacity = 1.0;
+
+        // screen shake
+        screenShake(0.12, 300);
+
+        // hit target now
+        const dmg = damage;
+        hp2 = Math.max(0, hp2 - dmg);
+        updateHP();
+        addFloatingDamage("-" + dmg, wizardR.position.clone().add(new THREE.Vector3(0,1.7,0)));
+
+        // glow flash on opponent
+        const flash = new THREE.PointLight(0xffe9a8, 1.6, 6, 2);
+        flash.position.copy(wizardR.position).add(new THREE.Vector3(0,1.2,0));
+        scene.add(flash);
+        setTimeout(()=>scene.remove(flash), 200);
+
+        phase = 2;
+        phaseStart = now;
+      }
+    }
+    else if (phase === 2){
+      // nova effects grow + fade
+      const dur = 800;
+      const e = Math.min(1, (now - phaseStart)/dur);
+
+      glyph.scale.setScalar(1 + e*2.4);
+      glyph.material.opacity = 0.85*(1-e);
+
+      pillar.material.opacity = Math.max(0, 0.8 - e*0.9);
+
+      shock.scale.setScalar(1 + e*3.2);
+      shock.material.opacity = Math.max(0, 0.9 - e*1.2);
+
+      // sparks physics
+      const pos = pGeom.attributes.position.array;
+      for (let i=0;i<sparkCount;i++){
+        const ix = i*3;
+        pos[ix]   += pVel[ix]*dt;
+        pos[ix+1] += pVel[ix+1]*dt - 0.98*dt*0.25; // little gravity
+        pos[ix+2] += pVel[ix+2]*dt;
+      }
+      pGeom.attributes.position.needsUpdate = true;
+      pMat.opacity = Math.max(0, 1.0 - e);
+
+      if (e >= 1){
+        // cleanup + end
+        if (charge.parent) charge.parent.remove(charge);
+        scene.remove(burstGroup);
+
+        // lower wand back
+        wand.rotation.z = startRot;
+
+        casting = false;
+        return; // stop updating
+      }
+    }
+
+    requestAnimationFrame(updateSpell);
+  }
+  requestAnimationFrame(updateSpell);
+}
+
+////////////////////////////////////////////////////////////////
+// Interaction
+////////////////////////////////////////////////////////////////
+addEventListener("click", () => castPowerNova({ from: wizardL, to: wizardR, damage: 260 }));
+addEventListener("keydown", (e) => {
+  if (e.code === "Space") castPowerNova({ from: wizardL, to: wizardR, damage: 260 });
+});
+
+// basic idle motion
+function idleTick(t){
+  const s = Math.sin(t*0.0014)*0.03;
+  wizardL.position.y = s;
+  wizardR.position.y = -s*0.6;
+}
+
+////////////////////////////////////////////////////////////////
+// Render loop
+////////////////////////////////////////////////////////////////
+const clock = new THREE.Clock();
+function animate(){
+  requestAnimationFrame(animate);
+  const t = performance.now();
+  idleTick(t);
+  renderer.render(scene, camera);
+}
+animate();
+
+addEventListener("resize", () => {
+  camera.aspect = innerWidth/innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+});
+</script>
+</body>
+</html>

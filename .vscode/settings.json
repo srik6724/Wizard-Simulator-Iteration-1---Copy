@@ -1,0 +1,15 @@
+{
+    "java.project.referencedLibraries": {
+        "include": [
+            "lib/**/*.jar",
+            "c:\\Users\\Sri\\Downloads\\guava-33.4.8-jre.jar",
+            "c:\\Users\\Sri\\Downloads\\jackson-databind-2.17.1.jar",
+            "c:\\Users\\Sri\\Downloads\\jackson-core-2.19.0 (1).jar"
+        ],
+        "exclude": [
+            "c:\\Users\\Sri\\Desktop\\openjfx-24.0.2_windows-x64_bin-sdk\\javafx-sdk-24.0.2\\lib\\javafx-swt.jar",
+            "c:\\Users\\Sri\\Desktop\\openjfx-24.0.2_windows-x64_bin-sdk\\javafx-sdk-24.0.2\\lib\\javafx.base.jar",
+            "c:\\Users\\Sri\\Desktop\\openjfx-24.0.2_windows-x64_bin-sdk\\javafx-sdk-24.0.2\\lib\\javafx.controls.jar"
+        ]
+    }
+}

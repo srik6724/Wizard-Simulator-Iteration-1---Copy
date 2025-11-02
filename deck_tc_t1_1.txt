@@ -1,0 +1,37 @@
+Side Deck
+TC Legion-Shield,1,100,Ice
+TC Legion-Shield,1,100,Ice
+TC Legion-Shield,1,100,Ice
+TC Legion-Shield,1,100,Ice
+TC Legion-Shield,1,100,Ice
+TC Blinding Light,2,80,Myth
+TC Blinding Light,2,80,Myth
+TC Blinding Light,2,80,Myth
+TC Infallible,0,100,Astral
+TC Infallible,0,100,Astral
+TC Infallible,0,100,Astral
+TC Empower,0,100,Death
+TC Empower,0,100,Death
+TC Empower,0,100,Death
+TC Empower,0,100,Death
+TC Empower,0,100,Death
+TC Empower,0,100,Death
+TC Empower,0,100,Death
+TC Cleanse Charm,0,100,Storm
+TC Cleanse Charm,0,100,Storm
+TC Balance Blade,0,100,Balance
+TC Balance Blade,0,100,Balance
+TC Power Nova,7,90,Balance
+TC Power Nova,7,90,Balance
+TC Reshuffle,4,100,Balance
+TC Sabertooth,10,80,Balance
+TC Elemental Shield,0,100,Balance
+TC Elemental Shield,0,100,Balance
+TC Elemental Shield,0,100,Balance
+TC Elemental Trap,0,100,Balance
+TC Elemental Trap,0,100,Balance
+TC Elemental Trap,0,100,Balance
+TC Weakness,0,100,Balance
+TC Weakness,0,100,Balance
+TC Weakness,0,100,Balance
+TC Weakness,0,100,Balance
