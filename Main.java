@@ -144,7 +144,7 @@ public class Main {
         match.initialize();
         
         // Training configuration
-        int numMatches = 10;  // Change this to train for more/fewer matches
+        int numMatches = 100;  // Change this to train for more/fewer matches
         
         System.out.println("\n" + "=".repeat(80));
         System.out.println("🤖 STARTING AI vs AI TRAINING SESSION");

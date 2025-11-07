@@ -10,11 +10,17 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
  import java.io.*;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.concurrent.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Match_Test_1_0 {
+    private static final HttpClient httpClient = HttpClient.newHttpClient();
+    private static final String PPO_SERVER_URL = "http://localhost:5000";
     private final Scanner sc = new Scanner(System.in);
     private List<Wizard> t1Wizards = new ArrayList<>();
     private List<Wizard> t2Wizards = new ArrayList<>();
@@ -236,8 +242,8 @@ public class Match_Test_1_0 {
         System.out.println("Resetting game state for new match...\n");
         
         // Reset health
-        if (w != null) w.getStatsInformation().setHealth(5000);
-        if (wt2 != null) wt2.getStatsInformation().setHealth(5000);
+        if (w != null) w.getStatsInformation().setHealth(11443);
+        if (wt2 != null) wt2.getStatsInformation().setHealth(11443);
         
         // Reset pips
         if (w != null) w.setPips(3);
@@ -534,7 +540,7 @@ for (String shield : shieldsToApply) {
     }
 }
 
- /*Integer r = wt2.getStatsInformation().getResist().get(school);
+ Integer r = wt2.getStatsInformation().getResist().get(school.toLowerCase());
 
 if(w.getInfallible() != null) {
                     int pierce = w.getInfallible().getPierce();
@@ -555,7 +561,7 @@ if (shrikeActive) {
     dmg = Math.round(dmg * 1.10);
 }
 
-spellDamage = (int) dmg; */
+spellDamage = (int) dmg; 
 
                 if(w.getAura() != null) {
                     String description = w.getAura().getDescription();
@@ -744,6 +750,9 @@ public void operateSpellConditions(String nameOfSpell, Spell selected_, Wizard w
             int spellDamage = (int) (damageOfSpell * (1 + (playerDamage/100.0) * 1.5));
             spellDamage = checkForBuffs(spellDamage, "balance", nameOfSpell, selected_.getSchool(), w, wt2);  
             System.out.println("Dealt " + spellDamage + " damage on opponent.");
+            int newHealth_2 = Math.max(0, wt2.getStatsInformation().getHealth() - spellDamage);
+            wt2.getStatsInformation().setHealth(newHealth_2);
+            matchLog.append("Dealt " + spellDamage + "using Scion Of Balance on opponent\n");
         }
         else if(nameOfSpell.equals("duststorm jinn")) {
                 int playerDamage = w.getStatsInformation().getDamage().get(w.getIdentity().toLowerCase());
@@ -760,11 +769,19 @@ public void operateSpellConditions(String nameOfSpell, Spell selected_, Wizard w
                 
                 spellDamageArr[0] = checkForBuffs(spellDamageArr[0], "balance", nameOfSpell, "ice", w, wt2);
                 System.out.println("Dealt " + spellDamageArr[0] + "ice damage on opponent.");
+                 int newHealth_1 = Math.max(0, wt2.getStatsInformation().getHealth() - spellDamage);
+                wt2.getStatsInformation().setHealth(newHealth_1);
+                matchLog.append("Dealt " + spellDamageArr[0] + "ice damage on opponent with duststorm jinn.\n");
                 spellDamageArr[1] = checkForBuffs(spellDamageArr[1], "balance", nameOfSpell, "fire", w, wt2);
                 System.out.println("Dealt " + spellDamageArr[1] + "fire damage on opponent.");
+                 int newHealth_2 = Math.max(0, wt2.getStatsInformation().getHealth() - spellDamage);
+                wt2.getStatsInformation().setHealth(newHealth_2);
+                matchLog.append("Dealt " + spellDamageArr[1] + "ice damage on opponent with duststorm jinn.\n");
                 spellDamageArr[2] = checkForBuffs(spellDamageArr[2], "balance", nameOfSpell, "storm", w, wt2);
                 System.out.println("Dealt " + spellDamageArr[2] + "storm damage on opponent.");
-
+                int newHealth_3 = Math.max(0, wt2.getStatsInformation().getHealth() - spellDamage);
+                wt2.getStatsInformation().setHealth(newHealth_3);
+                matchLog.append("Dealt " + spellDamageArr[2] + "ice damage on opponent with duststorm jinn.\n");
         }
         else if(nameOfSpell.equals("judgment")) {
             int playerDamage = w.getStatsInformation().getDamage().get(w.getIdentity().toLowerCase());
@@ -772,6 +789,10 @@ public void operateSpellConditions(String nameOfSpell, Spell selected_, Wizard w
             int spellDamage = (int) (damageOfSpell * (1 + (playerDamage/100.0) * 1.5));
             spellDamage = checkForBuffs(spellDamage, "balance", nameOfSpell, "balance", w, wt2);
             System.out.println("Dealt " + spellDamage + " on opponent.");
+             int newHealth = Math.max(0, wt2.getStatsInformation().getHealth() - spellDamage);
+            wt2.getStatsInformation().setHealth(newHealth);
+            matchLog.append("Dealt " + spellDamage + "damage on opponent with judgement.\n");
+
         }
         else if(nameOfSpell.equals("mana burn")) {
             int playerDamage = w.getStatsInformation().getDamage().get(w.getIdentity().toLowerCase());
@@ -779,6 +800,10 @@ public void operateSpellConditions(String nameOfSpell, Spell selected_, Wizard w
             int spellDamage = (int) (damageOfSpell * (1+ (playerDamage/100.0) * 1.5));
             spellDamage = checkForBuffs(spellDamage, "balance", nameOfSpell, selected_.getSchool(), w, wt2);
             System.out.println("Dealt " + spellDamage + " on opponent.");
+             int newHealth = Math.max(0, wt2.getStatsInformation().getHealth() - spellDamage);
+            wt2.getStatsInformation().setHealth(newHealth);
+            wt2.setPips(wt2.getPips() - 5); 
+            matchLog.append("Dealt " + spellDamage + "damage on opponent with mana burn.\n");
         }
         else if(nameOfSpell.equals("mockenspiel")) {
             int playerDamage = w.getStatsInformation().getDamage().get(w.getIdentity().toLowerCase());
@@ -791,12 +816,18 @@ public void operateSpellConditions(String nameOfSpell, Spell selected_, Wizard w
             wt2.getWeaknesses().put("universal", "-35% weakness");
             wt2.getWeaknessesList().add("-35% weakness");
             wt2.getWeaknessesList().add("-35% weakness");
+             int newHealth = Math.max(0, wt2.getStatsInformation().getHealth() - spellDamage);
+            wt2.getStatsInformation().setHealth(newHealth);
+            matchLog.append("Dealt " + spellDamage + "damage on opponent with mockenspiel.\n");
         }
         else if(nameOfSpell.equals("power nova")) {
             int playerDamage = w.getStatsInformation().getDamage().get(w.getIdentity().toLowerCase());
             int damageOfSpell = 665;
             int spellDamage = (int) (damageOfSpell * (1+ (playerDamage/100.0) * 1.5));
             spellDamage = checkForBuffs(spellDamage, "balance", nameOfSpell, selected_.getSchool(), w, wt2);
+             int newHealth = Math.max(0, wt2.getStatsInformation().getHealth() - spellDamage);
+            wt2.getStatsInformation().setHealth(newHealth);
+            matchLog.append("Dealt " + spellDamage + "damage on opponent with power nova.\n");
         }
         else if(nameOfSpell.equals("ra")) {
             int playerDamage = w.getStatsInformation().getDamage().get(w.getIdentity().toLowerCase());
@@ -807,6 +838,9 @@ public void operateSpellConditions(String nameOfSpell, Spell selected_, Wizard w
             spellDamage = checkForBuffs(spellDamage, "balance", nameOfSpell, selected_.getSchool(), w, wt2);
             wt2.getWeaknessesList().add("-40% weakness");
             wt2.getWeaknesses().put("universal", "-40% weakness");
+             int newHealth = Math.max(0, wt2.getStatsInformation().getHealth() - spellDamage);
+            wt2.getStatsInformation().setHealth(newHealth);
+            matchLog.append("Dealt " + spellDamage + "damage on opponent with ra.\n");
         }
         else if(nameOfSpell.equals("jinn's fortune")) {
             int countTrapsonW1 = w.getTrapsList().size();
@@ -889,6 +923,9 @@ public void operateSpellConditions(String nameOfSpell, Spell selected_, Wizard w
             int spellDamage = (int) (result * (1+ (playerDamage/100.0) * 1.5));
             spellDamage = checkForBuffs(spellDamage, "balance", nameOfSpell, selected_.getSchool(), w, wt2);
             System.out.println("Dealt " + spellDamage + " on opponent.");
+             int newHealth = Math.max(0, wt2.getStatsInformation().getHealth() - spellDamage);
+            wt2.getStatsInformation().setHealth(newHealth);
+            matchLog.append("Dealt " + spellDamage + "damage on opponent with sabertooth.\n");
             w.getShieldsList().add("-50% life shield");
             w.getShieldsList().add("-50% death shield");
             w.getShieldsList().add("-50% myth shield");
@@ -916,6 +953,9 @@ public void operateSpellConditions(String nameOfSpell, Spell selected_, Wizard w
             int spellDamage = (int) (result * (1+ (playerDamage/100.0) * 1.5));
             spellDamage = checkForBuffs(spellDamage, "balance", nameOfSpell, selected_.getSchool(), w, wt2);
             System.out.println("Dealt " + spellDamage + " on opponent.");
+             int newHealth = Math.max(0, wt2.getStatsInformation().getHealth() - spellDamage);
+            wt2.getStatsInformation().setHealth(newHealth);
+            matchLog.append("Dealt " + spellDamage + "damage on opponent with sandstorm.\n");
         }
         else if(nameOfSpell.equals("spectral blast")) {
             int playerDamage = w.getStatsInformation().getDamage().get(w.getIdentity().toLowerCase());
@@ -929,15 +969,24 @@ public void operateSpellConditions(String nameOfSpell, Spell selected_, Wizard w
                 int spellDamage = (int) (damageOfSpell * (1+ (playerDamage/100.0) * 1.5));
                 spellDamage = checkForBuffs(spellDamage, "balance", nameOfSpell, "ice", w, wt2);
                 System.out.println("Dealt " + spellDamage + " on opponent.");
+                 int newHealth = Math.max(0, wt2.getStatsInformation().getHealth() - spellDamage);
+                wt2.getStatsInformation().setHealth(newHealth);
+                matchLog.append("Dealt " + spellDamage + "damage on opponent with spectral blast.\n");
             } else if(randomElement.equals("fire")) {
                 int damageOfSpell = 440;
                 int spellDamage = (int) (damageOfSpell * (1+ (playerDamage/100.0) * 1.5));
                 spellDamage = checkForBuffs(spellDamage, "balance", nameOfSpell, "fire", w, wt2);
                 System.out.println("Dealt " + spellDamage + " on opponent.");
+                 int newHealth = Math.max(0, wt2.getStatsInformation().getHealth() - spellDamage);
+                wt2.getStatsInformation().setHealth(newHealth);
+                matchLog.append("Dealt " + spellDamage + "damage on opponent with spectral blast.\n");
             } else if(randomElement.equals("storm")) {
                 int damageOfSpell = 550;
                 int spellDamage = (int) (damageOfSpell * (1+ (playerDamage/100.0) * 1.5));
                 spellDamage = checkForBuffs(spellDamage, "balance", nameOfSpell, "storm", w, wt2);
+                 int newHealth = Math.max(0, wt2.getStatsInformation().getHealth() - spellDamage);
+                wt2.getStatsInformation().setHealth(newHealth);
+                matchLog.append("Dealt " + spellDamage + "damage on opponent with spectral blast.\n");
             }
         }
         else if(nameOfSpell.equals("steel giant")) {
@@ -955,6 +1004,9 @@ public void operateSpellConditions(String nameOfSpell, Spell selected_, Wizard w
                 int spellDamage = (int) (damageOfSpell * (1+ (playerDamage/100.0) * 1.5));
                 spellDamage = checkForBuffs(spellDamage, "balance", nameOfSpell, selected_.getSchool(), w, wt2);
                 System.out.println("Dealt " + spellDamage + " to opponent.");
+                 int newHealth = Math.max(0, wt2.getStatsInformation().getHealth() - spellDamage);
+                wt2.getStatsInformation().setHealth(newHealth);
+                matchLog.append("Dealt " + spellDamage + "damage on opponent with supernova.\n");
                 wt2.setAura(null);
             }
             else {
@@ -981,6 +1033,9 @@ public void operateSpellConditions(String nameOfSpell, Spell selected_, Wizard w
             int spellDamage = (int) (damageOfSpell * (1+ (playerDamage/100.0) * 1.5));
             spellDamage = checkForBuffs(spellDamage, "balance", nameOfSpell, selected_.getSchool(), w, wt2);
             System.out.println("Dealt " + spellDamage + " on opponent.");
+            int newHealth = Math.max(0, wt2.getStatsInformation().getHealth() - spellDamage);
+            wt2.getStatsInformation().setHealth(newHealth);
+            matchLog.append("Dealt " + spellDamage + "damage on opponent with wand-hit.\n");
         }
         else if(nameOfSpell.equals("tc legion-shield")) {
             w.getShieldsList().add("tc legion-shield -45%");
@@ -1027,6 +1082,9 @@ public void operateSpellConditions(String nameOfSpell, Spell selected_, Wizard w
             int spellDamage = (int) (damageOfSpell * (1+ (playerDamage/100.0) * 1.5));
             spellDamage = checkForBuffs(spellDamage, "balance", nameOfSpell, selected_.getSchool(), w, wt2);
             System.out.println("Dealt " + spellDamage + " on opponent.");
+             int newHealth = Math.max(0, wt2.getStatsInformation().getHealth() - spellDamage);
+            wt2.getStatsInformation().setHealth(newHealth);
+            matchLog.append("Dealt " + spellDamage + "damage on opponent with tc power nova.\n");
             wt2.getWeaknessesList().add("-25% univeral weakness");
             wt2.getWeaknesses().put("universal", "-25% tc weakness");
             wt2.getNegativeCharms().add("-25% tc weakness");
@@ -1055,6 +1113,9 @@ public void operateSpellConditions(String nameOfSpell, Spell selected_, Wizard w
             int spellDamage = (int) (result * (1+ (playerDamage/100.0) * 1.5));
             spellDamage = checkForBuffs(spellDamage, "balance", nameOfSpell, selected_.getSchool(), w, wt2);
             System.out.println("Dealt " + spellDamage + " on opponent.");
+             int newHealth = Math.max(0, wt2.getStatsInformation().getHealth() - spellDamage);
+            wt2.getStatsInformation().setHealth(newHealth);
+            matchLog.append("Dealt " + spellDamage + "damage on opponent with tc sabertooth.\n");
             w.getShieldsList().add("-50% tc life shield");
             w.getShieldsList().add("-50% tc death shield");
             w.getShieldsList().add("-50% tc myth shield");
@@ -1162,7 +1223,9 @@ public void operateSpellConditions(String nameOfSpell, Spell selected_, Wizard w
             
             System.out.println(w.getIdentity() + " wizard " + w.getName());
             System.out.println("Pips: " + w.getPips() + "for team 1");
+            matchLog.append("Pips for " + w.getIdentity() + "for team 1:" + w.getPips() + "\n");
             System.out.println("Pips: " + wt2.getPips() + " for team 2");
+            matchLog.append("Pips for " + wt2.getIdentity() + "for team 2: " + wt2.getPips() + "\n");
             String pipsByCount = "";
             if(initial == 1) {
                 pipsByCount = w.getPipsByCount(initial);
@@ -1172,37 +1235,76 @@ public void operateSpellConditions(String nameOfSpell, Spell selected_, Wizard w
             }
 
             System.out.println("Checking to see whether next pip is a regular pip or power pip based on power pip percentage.");
-            System.out.println("Pips By Count: " + pipsByCount);
             System.out.println("Health: " + w.getStatsInformation().getHealth());
+            matchLog.append("Health for " + w.getIdentity() + " for team 1:" + w.getStatsInformation().getHealth() + "\n");
             System.out.println("Positive Charms: " + w.getPositiveCharms());
+            matchLog.append("Positive Charms for " + w.getIdentity() + " for team 1:" + w.getPositiveCharms() + "\n");
             System.out.println("Negative Charms: " + w.getNegativeCharms());
+            matchLog.append("Negative Charms for " + w.getIdentity() + " for team 1: " + w.getNegativeCharms() + "\n");
             System.out.println("Shields on self: " + w.getShieldsList());
-            System.out.println("Traps on self: "  + w.getTraps());
+            matchLog.append("Shields on self: " + w.getIdentity() + " for team 1: " + w.getShieldsList() + "\n");
+            System.out.println("Traps on self: "  + w.getTrapsList());
+            matchLog.append("Traps on self: " + w.getIdentity() + " for team 1: " + w.getTrapsList() + "\n");
             System.out.println("Effects on self: " + w.getEffects());
+            matchLog.append("Effects on self: " + w.getIdentity() + " for team 1: " + w.getEffects() + "\n");
             System.out.println("Shadow Gauge: " + w.getShadowGauge());
+            matchLog.append("Shadow Gauge: " + w.getIdentity() + " for team 1: " + w.getShadowGauge() + " \n");
             System.out.println("Health: " + wt2.getStatsInformation().getHealth());
+            matchLog.append("Health for " + w.getIdentity() + " for team 2: " + wt2.getStatsInformation().getHealth() + "\n");
             System.out.println("Positive Charms: " + wt2.getPositiveCharms());
+            matchLog.append("Positive Charms for " + wt2.getIdentity() + " for team 2:" + wt2.getPositiveCharms() + "\n");
             System.out.println("Negative Charms: " + wt2.getNegativeCharms());
+            matchLog.append("Negative Charms for " + wt2.getIdentity() + " for team 2: " + wt2.getNegativeCharms() + "\n");
             System.out.println("Shields on self: " + wt2.getShieldsList());
-            System.out.println("Traps on self: "  + wt2.getTraps());
+            matchLog.append("Shields on self: " + wt2.getIdentity() + " for team 2: " + wt2.getShieldsList() + "\n");
+            System.out.println("Traps on self: "  + wt2.getTrapsList());
+            matchLog.append("Traps on self: " + wt2.getIdentity() + " for team 2: " + wt2.getTrapsList() + "\n");
             System.out.println("Effects on self: " + wt2.getEffects());
+            matchLog.append("Effects on self: " + wt2.getIdentity() + " for team 2: " + wt2.getEffects() + "\n");
             System.out.println("Shadow Gauge: " + wt2.getShadowGauge());
+            matchLog.append("Shadow Gauge: " + wt2.getIdentity() + " for team 2: " + wt2.getShadowGauge() + " \n");
             if(w.getAura() != null) {
                 System.out.println("Auras on self: " + w.getAura().getName() + ", Round: " + w.getAura().getTick() + "/" + w.getAura().getRounds());
+                matchLog.append("Auras on self: " + w.getIdentity() + " for team 1: " +  w.getAura().getName() + ", Round: " + w.getAura().getTick() + "/" + w.getAura().getRounds() + "\n");
             }
             if(w.getInfallible() != null) {
-                System.out.println("INfallible on self: " + w.getInfallible().getName() + " , Round: " + w.getInfallible().getTick() + "/" + w.getInfallible().getRoundNo());
+                System.out.println("Infallible on self: " + w.getInfallible().getName() + " , Round: " + w.getInfallible().getTick() + "/" + w.getInfallible().getRoundNo());
+                matchLog.append("Infallible on self: " + w.getIdentity() + " for team 1: " +  w.getInfallible().getName() + " , Round: " + w.getInfallible().getTick() + "/" + w.getInfallible().getRoundNo() + "\n");
             }
             if(wt2.getAura() != null) {
                 System.out.println("Auras on self: " + wt2.getAura().getName() + ", Round: " + wt2.getAura().getTick() + "/" + wt2.getAura().getRounds());
             }
-            if(wt2.getOvertimes().size() > 0) {
+            if(w.getOvertimes().size() > 0) {
+                Iterator<Overtime> itr = w.getOvertimes().iterator();
+
+                while (itr.hasNext()) {
+                    Overtime overtime = itr.next();
+
+                    int spellDamage = overtime.getDamagePerRound()[overtime.getTick() - 2];
+
+                    System.out.println("Dealt " + spellDamage + " on tick " + overtime.getTick() +
+                       " out of round " + overtime.getRounds());
+                    matchLog.append("Dealt " + spellDamage + " on tick " + overtime.getTick() +
+                    " out of round " + overtime.getRounds() + "\n");
+
+                    int newHealth = Math.max(0, w.getStatsInformation().getHealth() - spellDamage);
+                    w.getStatsInformation().setHealth(newHealth);
+
+                    overtime.setTick(overtime.getTick() + 1);
+
+                    // ✅ Safe removal while iterating
+                    if (overtime.getTick() > overtime.getRounds()) {
+                        itr.remove();
+                    }
+                }
+            }
+            /*if(wt2.getOvertimes().size() > 0) {
                 for(Overtime overtime: wt2.getOvertimes()) {
                     int spellDamage = overtime.getDamagePerRound()[overtime.getTick()-2];
                     //spellDamage = checkForBuffsOvertime(spellDamage, "balance", overtime.getName().toLowerCase(), overtime.getSchool(), w, wt2); 
                     System.out.println("Dealt " + spellDamage + " on tick " + overtime.getTick() + " out of round " + overtime.getRounds());
                 }
-            }
+            }*/
             Deck mainDeck = w.getMainDeck();
             Deck tcDeck = w.getTcDeck();
 
@@ -1283,7 +1385,7 @@ if (need > 0) {
         
         if (usePPOForTeam1) {
             // Get discard count from PPO agent
-            int discardCount = getPPOActionDiscard(w, wt2, activeHand);
+            int discardCount = getPPOActionDiscard(w, wt2, activeHand, "team1");
             System.out.println("PPO Agent: Discarding " + discardCount + " cards");
             
             // Select which specific cards to discard (using heuristic)
@@ -1401,7 +1503,7 @@ if (usePPOForTeam1) {
     }
     
     // Get draw count from PPO agent
-    drawCount = getPPOActionDraw(w, wt2, activeHand, maxDraw);
+    drawCount = getPPOActionDraw(w, wt2, activeHand, maxDraw, "team1");
     System.out.println("PPO Agent: Drawing " + drawCount + " TCs (max: " + maxDraw + ")");
     logTurn("Team 1", roundNumber, "Drew " + drawCount + "cards", 0.0);
     
@@ -1456,11 +1558,14 @@ for (int i = 0; i < activeHand.size(); i++) {
 
 int castChoice = -1;
 
+int previousPlayerHealth = w.getStatsInformation().getHealth();
+int previousOpponentHealth = wt2.getStatsInformation().getHealth();
+
 if (usePPOForTeam1) {
 
     while(true) {
         // Get action from PPO agent (action masking ensures it's valid)
-    int ppoAction = getPPOAction(w, wt2, activeHand);
+    int ppoAction = getPPOAction(w, wt2, activeHand, "team2");
     System.out.println("PPO Agent selected action: " + ppoAction);
     
     // 0 = pass, 1-7 = cast card at that position
@@ -1552,6 +1657,32 @@ if (castChoice > 0) {
     }
 }
 
+ if (usePPOForTeam1) {
+        boolean gameOver = w.getStatsInformation().getHealth() <= 0
+                            || wt2.getStatsInformation().getHealth() <= 0;
+        
+        boolean spellWasCast = (castChoice > 0);
+        double reward = calculateReward(w, wt2, previousPlayerHealth, previousOpponentHealth, spellWasCast);
+        
+        sendRewardToPPO(reward, gameOver, "team1");  // ✅ "team1"
+        
+        if (wt2.getStatsInformation().getHealth() <= 0 || countTCAndMain(wt2.getMainDeck(), wt2.getTcDeck()) == 0) {
+            System.out.println("Team 1 WON! Final reward: " + reward);
+            logTurn("Team 1", roundNumber, "WON", reward);
+            finalizeMatchLog("Team 1", roundNumber);
+            updateAgentsAfterMatch();
+            winner = true;
+            return;
+        } else if(w.getStatsInformation().getHealth() <= 0 || countTCAndMain(w.getMainDeck(), w.getTcDeck()) == 0) {
+            System.out.println("Team 1 LOST! Final reward: " + reward);
+            logTurn("Team 2", roundNumber, "WON", reward);
+            finalizeMatchLog("Team 2", roundNumber);
+            updateAgentsAfterMatch();
+            winner = true;
+            return;
+        }
+    }
+
 // show hand after casting
 for (int i = 0; i < activeHand.size(); i++) {
     System.out.println("SPELL " + (i + 1) + ": " + activeHand.get(i).getName());
@@ -1638,38 +1769,74 @@ int activeHandSize = 0;
             
             System.out.println(wt2.getIdentity() + " wizard " + wt2.getName());
             System.out.println("Pips: " + wt2.getPips() + "for team 2");
+            matchLog.append("Pips for team 2: " + wt2.getPips() + "\n");
             System.out.println("Pips: " + w.getPips() + " for team 1");
+            matchLog.append("Pips for team 1: " + w.getPips() + "\n");
 
             System.out.println("Checking to see whether next pip is a regular pip or power pip based on power pip percentage.");
             System.out.println("Health: " + wt2.getStatsInformation().getHealth());
+            matchLog.append("Health for " + wt2.getIdentity() + " for team 2: " + wt2.getStatsInformation().getHealth() + "\n");
             System.out.println("Positive Charms: " + wt2.getPositiveCharms());
+            matchLog.append("Positive Charms for " + wt2.getIdentity() + " for team 2: " + wt2.getPositiveCharms() + "\n");
             System.out.println("Negative Charms: " + wt2.getNegativeCharms());
+            matchLog.append("Negative Charms for " + wt2.getIdentity() + " for team 2: " + wt2.getNegativeCharms() + "\n");
             System.out.println("Shields on self: " + wt2.getShieldsList());
-            System.out.println("Traps on self: "  + wt2.getTraps());
+            matchLog.append("Shields on self " + wt2.getIdentity() + " for team 2: " + wt2.getShieldsList() + "\n");
+            System.out.println("Traps on self: "  + wt2.getTrapsList());
+            matchLog.append("Traps on self " + wt2.getIdentity() + " for team 2: " + wt2.getTrapsList() + "\n");
             System.out.println("Effects on self: " + wt2.getEffects());
+            matchLog.append("Effects on self " + wt2.getIdentity() + " for team 2: " + wt2.getEffects() + "\n");
             System.out.println("Shadow Gauge: " + wt2.getShadowGauge());
+            matchLog.append("Shadow Gauge " + wt2.getIdentity() + " for team 2: " + wt2.getShadowGauge() + "\n");
             System.out.println("Health: " + w.getStatsInformation().getHealth());
+            matchLog.append("Health for " + w.getIdentity() + " for team 1: " + w.getStatsInformation().getHealth() + "\n");
             System.out.println("Positive Charms: " + w.getPositiveCharms());
+            matchLog.append("Positive Charms for " + w.getIdentity() + " for team 1: " + w.getPositiveCharms() + "\n");
             System.out.println("Negative Charms: " + w.getNegativeCharms());
+            matchLog.append("Negative Charms for " + w.getIdentity() + " for team 1: " + w.getNegativeCharms() + "\n");
             System.out.println("Shields on self: " + w.getShieldsList());
-            System.out.println("Traps on self: "  + w.getTraps());
+            matchLog.append("Shields on self " + w.getIdentity() + " for team 1: " + w.getShieldsList() + "\n");
+            System.out.println("Traps on self: "  + w.getTrapsList());
+            matchLog.append("Traps on self " + w.getIdentity() + " for team 1: " + w.getTrapsList() + "\n");
             System.out.println("Effects on self: " + w.getEffects());
+            matchLog.append("Effects on self " + w.getIdentity() + " for team 2: " + w.getEffects() + "\n");
             System.out.println("Shadow Gauge: " + w.getShadowGauge());
+            matchLog.append("Shadow Gauge " + w.getIdentity() + " for team 1: " + w.getShadowGauge() + "\n");
             if(wt2.getAura() != null) {
                 System.out.println("Auras on self: " + wt2.getAura().getName() + ", Round: " + wt2.getAura().getTick() + "/" + wt2.getAura().getRounds());
+                matchLog.append("Auras on self for team 2: " + wt2.getAura().getName() + ", Round: " + wt2.getAura().getTick() + "/" + wt2.getAura().getRounds() + "\n");
             }
             if(wt2.getInfallible() != null) {
-                System.out.println("INfallible on self: " + wt2.getInfallible().getName() + " , Round: " + wt2.getInfallible().getTick() + "/" + wt2.getInfallible().getRoundNo());
+                System.out.println("Infallible on self: " + wt2.getInfallible().getName() + " , Round: " + wt2.getInfallible().getTick() + "/" + wt2.getInfallible().getRoundNo());
+                matchLog.append("Infallible on self for team 2: " + wt2.getInfallible().getName() + " , Round: " + wt2.getInfallible().getTick() + "/" + wt2.getInfallible().getRoundNo() + "\n");
             }
             if(w.getAura() != null) {
                 System.out.println("Auras on self: " + w.getAura().getName() + ", Round: " + w.getAura().getTick() + "/" + w.getAura().getRounds());
             }
-            if(w.getOvertimes().size() > 0) {
-                for(Overtime overtime: w.getOvertimes()) {
-                    int spellDamage = overtime.getDamagePerRound()[overtime.getTick()-2];
-                    //spellDamage = checkForBuffsOvertime(spellDamage, "balance", overtime.getName().toLowerCase(), overtime.getSchool(), w, wt2); 
-                    System.out.println("Dealt " + spellDamage + " on tick " + overtime.getTick() + " out of round " + overtime.getRounds());
+            if(wt2.getOvertimes().size() > 0) {
+                Iterator<Overtime> itr = wt2.getOvertimes().iterator();
+
+                while (itr.hasNext()) {
+                Overtime overtime = itr.next();
+
+                int spellDamage = overtime.getDamagePerRound()[overtime.getTick() - 2];
+
+                System.out.println("Dealt " + spellDamage + " on tick " + overtime.getTick() +
+                       " out of round " + overtime.getRounds());
+                matchLog.append("Dealt " + spellDamage + " on tick " + overtime.getTick() +
+                    " out of round " + overtime.getRounds() + "\n");
+
+                int newHealth = Math.max(0, wt2.getStatsInformation().getHealth() - spellDamage);
+                wt2.getStatsInformation().setHealth(newHealth);
+
+                overtime.setTick(overtime.getTick() + 1);
+
+                // ✅ Safe removal while iterating
+                if (overtime.getTick() > overtime.getRounds()) {
+                    itr.remove();
                 }
+            }
+
             }
             Deck mainDeck = wt2.getMainDeck();
             Deck tcDeck = wt2.getTcDeck();
@@ -1752,7 +1919,7 @@ if (need > 0) {
         
         if (usePPOForTeam2) {
             // Get discard count from PPO agent
-            int discardCount = getPPOActionDiscard(wt2, w, activeHandTeam2);
+            int discardCount = getPPOActionDiscard(wt2, w, activeHandTeam2, "team2");
             System.out.println("PPO Agent: Discarding " + discardCount + " cards");
             
             // Select which specific cards to discard (using heuristic)
@@ -1842,7 +2009,7 @@ if (usePPOForTeam2) {
     }
     
     // Get draw count from PPO agent
-    drawCount = getPPOActionDraw(wt2, w, activeHandTeam2, maxDraw);
+    drawCount = getPPOActionDraw(wt2, w, activeHandTeam2, maxDraw, "team2");
     System.out.println("PPO Agent: Drawing " + drawCount + " TCs (max: " + maxDraw + ")");
     
     // No immediate reward for draw
@@ -1906,7 +2073,7 @@ if (usePPOForTeam2) {
 
     while(true) {
         // Get action from PPO agent (action masking ensures it's valid)
-    int ppoAction = getPPOAction(wt2, w, activeHandTeam2);
+    int ppoAction = getPPOAction(wt2, w, activeHandTeam2, "team2");
     System.out.println("PPO Agent selected action: " + ppoAction);
     
     // 0 = pass, 1-7 = cast card at that position
@@ -2003,25 +2170,28 @@ if (castChoice > 0) {
 if (usePPOForTeam2) {
     // Calculate generic reward based on damage and game outcome
     // previousPlayerHealth and previousOpponentHealth were stored before actions
-    boolean gameOver = w.getStatsInformation().getHealth() <= 0 || 
-                       wt2.getStatsInformation().getHealth() <= 0;
+    boolean gameOver = w.getStatsInformation().getHealth() <= 0
+                        || wt2.getStatsInformation().getHealth() <= 0;
     
     boolean spellWasCast = (castChoice > 0);
     double reward = calculateReward(wt2, w, previousPlayerHealth, previousOpponentHealth, spellWasCast);
     
-    sendRewardToPPO(reward, gameOver);
+    // ✅ FIXED: Changed "team1-team2" to "team2"
+    sendRewardToPPO(reward, gameOver, "team2");
     
         if (w.getStatsInformation().getHealth() <= 0 || countTCAndMain(w.getMainDeck(), w.getTcDeck()) == 0) {
             System.out.println("PPO Agent WON! Final reward: " + reward);
             logTurn("Team 2", roundNumber, "WON", reward);
             finalizeMatchLog("Team 2", roundNumber);
             winner = true;
+            updateAgentsAfterMatch();
             return;
         } else if(wt2.getStatsInformation().getHealth() <= 0 || countTCAndMain(wt2.getMainDeck(), wt2.getTcDeck()) == 0) {
             System.out.println("PPO Agent LOST! Final reward: " + reward);
             logTurn("Team 1", roundNumber, "WON", reward);
             finalizeMatchLog("Team 1", roundNumber);
             winner = true;
+            updateAgentsAfterMatch();
             return;
         }
 }
@@ -2160,8 +2330,39 @@ int activeHandSize = 0;
     /**
      * Calls the Python PPO agent to select an action
      */
-    private int callPPOAgent(String command, String input) {
+    private int callPPOAgent(String endpoint, String team, String jsonBody) {
+
         try {
+            HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(PPO_SERVER_URL + "/" + endpoint))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
+                .build();
+            
+            HttpResponse<String> response = httpClient.send(request, 
+                HttpResponse.BodyHandlers.ofString());
+            
+            if (response.statusCode() == 200) {
+                String responseBody = response.body();
+                
+                // Parse JSON response
+                int actionIndex = responseBody.indexOf("\"action\":");
+                if (actionIndex != -1) {
+                    String actionPart = responseBody.substring(actionIndex + 9);
+                    actionPart = actionPart.replaceAll("[^0-9]", "");
+                    if (!actionPart.isEmpty()) {
+                        return Integer.parseInt(actionPart);
+                    }
+                }
+            } else {
+                System.err.println("PPO Server error: " + response.statusCode());
+            }
+        } catch (Exception e) {
+            System.err.println("Error calling PPO server: " + e.getMessage());
+        }
+        
+        return 0;
+        /*try {
             // Pass command only, send input via stdin to avoid Windows shell escaping issues
             ProcessBuilder pb = new ProcessBuilder(pythonPath, ppoScriptPath, command);
             pb.redirectErrorStream(true);
@@ -2206,23 +2407,27 @@ int activeHandSize = 0;
             e.printStackTrace();
         }
         
-        return 0; // Default to pass if error
+        return 0; // Default to pass if error*/
     }
     
     /**
      * Gets action from PPO agent for the current game state
      */
-    private int getPPOAction(Wizard player, Wizard opponent, List<Spell> hand) {
+    private int getPPOAction(Wizard player, Wizard opponent, List<Spell> hand, String team) {
         String gameState = createGameState(player, opponent, hand);
-        return callPPOAgent("select_action", gameState);
+        String requestBody = "{\"team\":\"" + team + "\",\"state\":" + gameState + "}";
+        
+        return callPPOAgent("select_action", team, requestBody);
+        //return callPPOAgent("select_action", gameState);
     }
     
     /**
      * Gets discard decision from PPO agent (how many cards to discard)
      */
-    private int getPPOActionDiscard(Wizard player, Wizard opponent, List<Spell> hand) {
+    private int getPPOActionDiscard(Wizard player, Wizard opponent, List<Spell> hand, String team) {
         String gameState = createGameStateForDiscard(player, opponent, hand);
-        int action = callPPOAgent("select_action", gameState);
+        String requestBody = "{\"team\":\"" + team + "\",\"state\":" + gameState + "}";
+        int action = callPPOAgent("select_action", team, requestBody);
         // Action represents how many cards to discard (0-7)
         return Math.max(0, Math.min(hand.size(), action));
     }
@@ -2230,9 +2435,10 @@ int activeHandSize = 0;
     /**
      * Gets draw decision from PPO agent (how many TCs to draw)
      */
-    private int getPPOActionDraw(Wizard player, Wizard opponent, List<Spell> hand, int maxDraw) {
+    private int getPPOActionDraw(Wizard player, Wizard opponent, List<Spell> hand, int maxDraw, String team) {
         String gameState = createGameStateForDraw(player, opponent, hand, maxDraw);
-        int action = callPPOAgent("select_action", gameState);
+        String requestBody = "{\"team\":\"" + team + "\",\"state\":" + gameState + "}";
+        int action = callPPOAgent("select_action", team, requestBody);
         // Action represents how many TCs to draw (0 to maxDraw)
         return Math.max(0, Math.min(maxDraw, action));
     }
@@ -2396,8 +2602,22 @@ int activeHandSize = 0;
     /**
      * Sends reward to PPO agent for learning
      */
-    private void sendRewardToPPO(double reward, boolean done) {
+    private void sendRewardToPPO(double reward, boolean done, String team) {
+
+        String requestBody = "{\"team\":\"" + team + "\",\"reward\":" + reward + ",\"done\":" + done + "}";
+        
         try {
+            HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(PPO_SERVER_URL + "/store_reward"))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(requestBody))
+                .build();
+            
+            httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e) {
+            System.err.println("Error sending reward: " + e.getMessage());
+        }
+        /*try {
             String rewardData = "{\"reward\":" + reward + ",\"done\":" + done + "}";
             
             ProcessBuilder pb = new ProcessBuilder(pythonPath, ppoScriptPath, "store_reward");
@@ -2414,14 +2634,32 @@ int activeHandSize = 0;
             process.waitFor();
         } catch (Exception e) {
             System.err.println("Error sending reward: " + e.getMessage());
-        }
+        }*/
     }
     
     /**
      * Triggers PPO update (call at end of episode/round)
      */
     private void updatePPOAgent(String team) {
-    try {
+        String requestBody = "{\"team\":\"" + team + "\"}";
+        
+        try {
+            HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(PPO_SERVER_URL + "/update"))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(requestBody))
+                .build();
+            
+            HttpResponse<String> response = httpClient.send(request, 
+                HttpResponse.BodyHandlers.ofString());
+            
+            if (response.statusCode() == 200) {
+                System.out.println("  ✓ " + team + " agent updated successfully");
+            }
+        } catch (Exception e) {
+            System.err.println("Error updating " + team + ": " + e.getMessage());
+        }
+    /*try {
         ProcessBuilder pb = new ProcessBuilder(pythonPath, ppoScriptPath, "update", team);
         pb.redirectErrorStream(true);
         
@@ -2459,13 +2697,41 @@ int activeHandSize = 0;
     } catch (Exception e) {
         System.err.println("  ✗ Unexpected error updating " + team + ": " + e.getMessage());
         e.printStackTrace();
-    }
+    }*/
 }
     
     /**
      * Saves the trained PPO model
      */
-    private void savePPOModel(String path) {
+
+     private void savePPOModel(String path) {
+    try {
+        // Build JSON body
+        String jsonBody = "{\"path\": \"" + path + "\"}";
+
+        HttpRequest request = HttpRequest.newBuilder()
+            .uri(URI.create(PPO_SERVER_URL + "/save_model"))
+            .header("Content-Type", "application/json")
+            .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
+            .build();
+
+        HttpResponse<String> response = httpClient.send(
+            request, HttpResponse.BodyHandlers.ofString()
+        );
+
+        if (response.statusCode() == 200) {
+            System.out.println("✅ PPO model saved to: " + path);
+        } else {
+            System.err.println("❌ PPO save_model endpoint error: HTTP " + response.statusCode());
+            System.err.println("Response: " + response.body());
+        }
+
+    } catch (Exception e) {
+        System.err.println("Error calling PPO /save_model endpoint: " + e.getMessage());
+    }
+}
+
+    /*private void savePPOModel(String path) {
         try {
             ProcessBuilder pb = new ProcessBuilder(pythonPath, ppoScriptPath, "save_model", path);
             pb.redirectErrorStream(true);
@@ -2476,7 +2742,7 @@ int activeHandSize = 0;
         } catch (Exception e) {
             System.err.println("Error saving model: " + e.getMessage());
         }
-    }
+    }*/
     
     /**
      * Calculates reward based ONLY on game outcomes (generic)
@@ -2614,7 +2880,6 @@ int activeHandSize = 0;
  */
 private void updateAgentsAfterMatch() {
         // Lock to prevent multiple threads updating at once
-        synchronized (modelUpdateLock) {
             System.out.println("\n" + "=".repeat(50));
             System.out.println("MATCH COMPLETE - Updating agents...");
             System.out.println("=".repeat(50));
@@ -2628,10 +2893,8 @@ private void updateAgentsAfterMatch() {
                 System.out.println("Updating Team 2 AI...");
                 updatePPOAgent("team2");
             }
-            
-            if (matchNumber % 10 == 0) {
-                System.out.println("\n📦 Saving checkpoint backups...");
-                
+
+            if(matchNumber % 10 == 0) {
                 if (usePPOForTeam1) {
                     savePPOModel("checkpoints/team1_match_" + matchNumber + ".pth");
                 }
@@ -2642,7 +2905,6 @@ private void updateAgentsAfterMatch() {
             }
             
             System.out.println("=".repeat(50) + "\n");
-        }
     }
 
     public void printWizardTeamInformation() {

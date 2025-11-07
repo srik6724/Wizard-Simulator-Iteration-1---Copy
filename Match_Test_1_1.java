@@ -724,7 +724,6 @@ public class Match_Test_1_1 {
                 System.out.println("Dealt " + spellDamageArr[1] + "fire damage on opponent.");
                 spellDamageArr[2] = checkForBuffs(spellDamageArr[2], "balance", nameOfSpell, "storm", w, wt2);
                 System.out.println("Dealt " + spellDamageArr[2] + "storm damage on opponent.");
-
         }
         else if(nameOfSpell.equals("judgment")) {
             int playerDamage = w.getStatsInformation().getDamage().get(w.getIdentity().toLowerCase());

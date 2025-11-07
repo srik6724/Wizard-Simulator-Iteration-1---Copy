@@ -31,6 +31,10 @@ public class Overtime {
         return damagePerRound;
     }
 
+    public void setTick(int tick) {
+        this.tick = tick;
+    }
+
     public int getTick() {
         return tick;
     }

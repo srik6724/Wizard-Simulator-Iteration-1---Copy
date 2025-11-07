@@ -760,6 +760,8 @@ if (castChoice > 0) {
 
         System.out.println("Casted: " + nameOfSpell + " (now marked X)");
         int pipsAfterCast = w.getPips() - selected_.getPips(); 
+        System.out.println("PIps of current wizard: " + w.getPips()); 
+        System.out.println("Pips of spell: " + selected_.getPips()); 
         w.setPips(pipsAfterCast);
         operateSpellConditions(nameOfSpell, selected_, w, wt2);
     }
@@ -1583,8 +1585,12 @@ if (castChoice > 0) {
         activeHand.set(slot, selected_);
 
         System.out.println("Casted: " + nameOfSpell + " (now marked X)");
+        System.out.println("pips of wizard: " + w.getPips()); 
+        System.out.println("Pips of spell: " + selected_.getPips()); 
         int pipsAfterCast = w.getPips() - selected_.getPips(); 
+        System.out.println("Pips After Cast: " + pipsAfterCast);
         w.setPips(pipsAfterCast);
+        System.exit(0); 
         operateSpellConditions(nameOfSpell, selected_, w, wt2);
     }
 }
