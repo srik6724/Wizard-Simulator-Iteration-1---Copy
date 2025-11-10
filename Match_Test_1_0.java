@@ -760,9 +760,9 @@ public void operateSpellConditions(String nameOfSpell, Spell selected_, Wizard w
                 if(w.getShieldsList().size() >= 2 && wt2.getTrapsList().size() >= 2) {
                     damageOfSpell = 485;
                     w.getShieldsList().remove(0);
-                    w.getShieldsList().remove(1);
+                    w.getShieldsList().remove(0);
                     wt2.getTrapsList().remove(0);
-                    wt2.getTrapsList().remove(1);
+                    wt2.getTrapsList().remove(0);
                 }
                 int spellDamage = (int) (damageOfSpell * (1 + (playerDamage/100.0) * 1.5));
                 int[] spellDamageArr = {spellDamage, spellDamage, spellDamage};
@@ -1562,8 +1562,71 @@ int previousPlayerHealth = w.getStatsInformation().getHealth();
 int previousOpponentHealth = wt2.getStatsInformation().getHealth();
 
 if (usePPOForTeam1) {
+    int maxRetries = 10;  // Prevent infinite loops
+int retryCount = 0;
 
-    while(true) {
+while(retryCount < maxRetries) {
+    int ppoAction = getPPOAction(w, wt2, activeHand, "team1");
+    System.out.println("PPO Agent selected action: " + ppoAction);
+    
+    // 0 = pass (always valid)
+    if (ppoAction == 0) {
+        System.out.println("PPO Agent: Passing.");
+        castChoice = 0;
+        logTurn("Team 2", roundNumber, "Casting pass", 0.0);
+        break;
+    } 
+    // 1-7 = cast card
+    else if (ppoAction >= 1 && ppoAction <= activeHand.size()) {
+        castChoice = ppoAction;
+        int slot = castChoice - 1;
+        Spell selected_ = activeHand.get(slot);
+        
+        // Validate action
+        boolean isValid = !selected_.getName().equals("X") && selected_.getPips() <= w.getPips();
+        
+        // Check shadow spells
+        if ((selected_.getName().equals("Mockenspiel") || selected_.getName().equals("Shadow Shrike")) 
+            && w.getShadowGauge() < 100) {
+            isValid = false;
+        }
+        
+        if (isValid) {
+            System.out.println("PPO Agent: Casting " + selected_.getName());
+            logTurn("Team 1", roundNumber, "Casting " + selected_.getName(), 0.0);
+            break;  // Valid action, exit loop
+        } else {
+            // Invalid action - retry
+            retryCount++;
+            System.out.println("WARNING: PPO Agent chose invalid action (attempt " + retryCount + "/" + maxRetries + ")");
+            
+            if (retryCount >= maxRetries) {
+                System.out.println("ERROR: Max retries reached. Forcing PASS.");
+                castChoice = 0;  // Force pass
+                break;
+            }
+            // Continue loop to retry
+        }
+    } else {
+        // Out of range action
+        retryCount++;
+        System.out.println("WARNING: PPO Agent returned out-of-range action (attempt " + retryCount + "/" + maxRetries + ")");
+        
+        if (retryCount >= maxRetries) {
+            System.out.println("ERROR: Max retries reached. Forcing PASS.");
+            castChoice = 0;
+            break;
+        }
+    }
+}
+
+// If we somehow exit without setting castChoice, force pass
+if (castChoice == -1) {
+    System.out.println("WARNING: No action selected. Forcing PASS.");
+    castChoice = 0;
+}
+
+    /*while(true) {
         // Get action from PPO agent (action masking ensures it's valid)
     int ppoAction = getPPOAction(w, wt2, activeHand, "team2");
     System.out.println("PPO Agent selected action: " + ppoAction);
@@ -1598,7 +1661,7 @@ if (usePPOForTeam1) {
     } else {
         System.out.println("WARNING: PPO Agent returned out-of-range action. Passing.");
     }
-    }
+    }*/
 } else {
     // ===== ORIGINAL MANUAL INPUT FOR TEAM 2 =====
     while (true) {
@@ -2071,7 +2134,71 @@ int previousOpponentHealth = w.getStatsInformation().getHealth();
 // ===== PPO AGENT INTEGRATION FOR TEAM 2 =====
 if (usePPOForTeam2) {
 
-    while(true) {
+    int maxRetries = 10;  // Prevent infinite loops
+int retryCount = 0;
+
+while(retryCount < maxRetries) {
+    int ppoAction = getPPOAction(wt2, w, activeHandTeam2, "team1");
+    System.out.println("PPO Agent selected action: " + ppoAction);
+    
+    // 0 = pass (always valid)
+    if (ppoAction == 0) {
+        System.out.println("PPO Agent: Passing.");
+        castChoice = 0;
+        logTurn("Team 2", roundNumber, "Casting pass", 0.0);
+        break;
+    } 
+    // 1-7 = cast card
+    else if (ppoAction >= 1 && ppoAction <= activeHandTeam2.size()) {
+        castChoice = ppoAction;
+        int slot = castChoice - 1;
+        Spell selected_ = activeHandTeam2.get(slot);
+        
+        // Validate action
+        boolean isValid = !selected_.getName().equals("X") && selected_.getPips() <= w.getPips();
+        
+        // Check shadow spells
+        if ((selected_.getName().equals("Mockenspiel") || selected_.getName().equals("Shadow Shrike")) 
+            && w.getShadowGauge() < 100) {
+            isValid = false;
+        }
+        
+        if (isValid) {
+            System.out.println("PPO Agent: Casting " + selected_.getName());
+            logTurn("Team 2", roundNumber, "Casting " + selected_.getName(), 0.0);
+            break;  // Valid action, exit loop
+        } else {
+            // Invalid action - retry
+            retryCount++;
+            System.out.println("WARNING: PPO Agent chose invalid action (attempt " + retryCount + "/" + maxRetries + ")");
+            
+            if (retryCount >= maxRetries) {
+                System.out.println("ERROR: Max retries reached. Forcing PASS.");
+                castChoice = 0;  // Force pass
+                break;
+            }
+            // Continue loop to retry
+        }
+    } else {
+        // Out of range action
+        retryCount++;
+        System.out.println("WARNING: PPO Agent returned out-of-range action (attempt " + retryCount + "/" + maxRetries + ")");
+        
+        if (retryCount >= maxRetries) {
+            System.out.println("ERROR: Max retries reached. Forcing PASS.");
+            castChoice = 0;
+            break;
+        }
+    }
+}
+
+// If we somehow exit without setting castChoice, force pass
+if (castChoice == -1) {
+    System.out.println("WARNING: No action selected. Forcing PASS.");
+    castChoice = 0;
+}
+
+    /*while(true) {
         // Get action from PPO agent (action masking ensures it's valid)
     int ppoAction = getPPOAction(wt2, w, activeHandTeam2, "team2");
     System.out.println("PPO Agent selected action: " + ppoAction);
@@ -2106,7 +2233,7 @@ if (usePPOForTeam2) {
     } else {
         System.out.println("WARNING: PPO Agent returned out-of-range action. Passing.");
     }
-    }
+    }*/
 } else {
     // ===== ORIGINAL MANUAL INPUT FOR TEAM 2 =====
     while (true) {
@@ -2255,7 +2382,271 @@ int activeHandSize = 0;
     /**
      * Creates a JSON representation of the current game state for the PPO agent
      */
-    private String createGameState(Wizard player, Wizard opponent, List<Spell> hand) {
+    /**
+ * ENHANCED VERSION - Creates a comprehensive JSON representation of game state
+ * Includes tactical information crucial for decision-making
+ */
+private String createGameState(Wizard player, Wizard opponent, List<Spell> hand) {
+    StringBuilder json = new StringBuilder();
+    json.append("{");
+    
+    // ========== PLAYER CORE STATS ==========
+    json.append("\"player_health\":").append(player.getStatsInformation().getHealth()).append(",");
+    json.append("\"player_health_pct\":").append(
+        String.format("%.3f", player.getStatsInformation().getHealth() / 11443.0)
+    ).append(",");
+    json.append("\"player_pips\":").append(player.getPips()).append(",");
+    json.append("\"player_shadow_gauge\":").append(player.getShadowGauge()).append(",");
+    
+    // ========== OPPONENT CORE STATS ==========
+    json.append("\"opponent_health\":").append(opponent.getStatsInformation().getHealth()).append(",");
+    json.append("\"opponent_health_pct\":").append(
+        String.format("%.3f", opponent.getStatsInformation().getHealth() / 11443.0)
+    ).append(",");
+    json.append("\"opponent_pips\":").append(opponent.getPips()).append(",");
+    json.append("\"opponent_shadow_gauge\":").append(opponent.getShadowGauge()).append(",");
+    
+    // ========== PLAYER TACTICAL STATE ==========
+    // Positive Charms (Blades)
+    json.append("\"player_blade_count\":").append(player.getPositiveCharms().size()).append(",");
+    int playerBladeStrength = 0;
+    for (String blade : player.getPositiveCharms()) {
+        playerBladeStrength += extractPercentage(blade);
+    }
+    json.append("\"player_blade_strength\":").append(playerBladeStrength).append(",");
+    
+    // Negative Charms (Weaknesses)
+    json.append("\"player_weakness_count\":").append(player.getNegativeCharms().size()).append(",");
+    int playerWeaknessStrength = 0;
+    for (String weakness : player.getNegativeCharms()) {
+        playerWeaknessStrength += extractPercentage(weakness);
+    }
+    json.append("\"player_weakness_strength\":").append(playerWeaknessStrength).append(",");
+    
+    // Shields
+    json.append("\"player_shield_count\":").append(player.getShieldsList().size()).append(",");
+    int playerShieldStrength = 0;
+    for (String shield : player.getShieldsList()) {
+        playerShieldStrength += extractPercentage(shield);
+    }
+    json.append("\"player_shield_strength\":").append(playerShieldStrength).append(",");
+    
+    // Traps on self (bad for player)
+    json.append("\"player_trap_count\":").append(player.getTrapsList().size()).append(",");
+    
+    // ========== OPPONENT TACTICAL STATE ==========
+    // Opponent Blades (threat to player)
+    json.append("\"opponent_blade_count\":").append(opponent.getPositiveCharms().size()).append(",");
+    int opponentBladeStrength = 0;
+    for (String blade : opponent.getPositiveCharms()) {
+        opponentBladeStrength += extractPercentage(blade);
+    }
+    json.append("\"opponent_blade_strength\":").append(opponentBladeStrength).append(",");
+    
+    // Opponent Weaknesses (good for player)
+    json.append("\"opponent_weakness_count\":").append(opponent.getNegativeCharms().size()).append(",");
+    
+    // Opponent Shields (reduces player damage)
+    json.append("\"opponent_shield_count\":").append(opponent.getShieldsList().size()).append(",");
+    int opponentShieldStrength = 0;
+    for (String shield : opponent.getShieldsList()) {
+        opponentShieldStrength += extractPercentage(shield);
+    }
+    json.append("\"opponent_shield_strength\":").append(opponentShieldStrength).append(",");
+    
+    // Traps on opponent (good for player)
+    json.append("\"opponent_trap_count\":").append(opponent.getTrapsList().size()).append(",");
+    int opponentTrapStrength = 0;
+    for (String trap : opponent.getTrapsList()) {
+        opponentTrapStrength += extractPercentage(trap);
+    }
+    json.append("\"opponent_trap_strength\":").append(opponentTrapStrength).append(",");
+    
+    // ========== AURA & SPECIAL EFFECTS ==========
+    json.append("\"player_has_aura\":").append(player.getAura() != null ? 1 : 0).append(",");
+    if (player.getAura() != null) {
+        json.append("\"player_aura_strength\":").append(
+            extractPercentage(player.getAura().getDescription())
+        ).append(",");
+        json.append("\"player_aura_rounds_left\":").append(
+            player.getAura().getRounds() - player.getAura().getTick()
+        ).append(",");
+    } else {
+        json.append("\"player_aura_strength\":0,");
+        json.append("\"player_aura_rounds_left\":0,");
+    }
+    
+    json.append("\"opponent_has_aura\":").append(opponent.getAura() != null ? 1 : 0).append(",");
+    if (opponent.getAura() != null) {
+        json.append("\"opponent_aura_rounds_left\":").append(
+            opponent.getAura().getRounds() - opponent.getAura().getTick()
+        ).append(",");
+    } else {
+        json.append("\"opponent_aura_rounds_left\":0,");
+    }
+    
+    // Infallible (pierce boost)
+    json.append("\"player_has_infallible\":").append(player.getInfallible() != null ? 1 : 0).append(",");
+    
+    // ========== HAND INFORMATION ==========
+    json.append("\"hand\":[");
+    int castableCount = 0;
+    int totalDamagePotential = 0;
+    
+    for (int i = 0; i < hand.size(); i++) {
+        if (i > 0) json.append(",");
+        Spell spell = hand.get(i);
+        json.append("{");
+        
+        boolean isValid = !spell.getName().equals("X");
+        boolean canCast = isValid && spell.getPips() <= player.getPips();
+        
+        // Shadow spell check
+        if (spell.getName().toLowerCase().contains("mockenspiel") || 
+            spell.getName().toLowerCase().contains("shadow shrike")) {
+            canCast = canCast && player.getShadowGauge() >= 100;
+        }
+        
+        json.append("\"is_valid\":").append(isValid ? 1 : 0).append(",");
+        json.append("\"can_cast\":").append(canCast ? 1 : 0).append(",");
+        json.append("\"pips\":").append(spell.getPips()).append(",");
+        
+        // Estimate damage potential
+        int damagePotential = 0;
+        if (canCast) {
+            damagePotential = estimateSpellValue(spell, player, opponent);
+            castableCount++;
+            totalDamagePotential += damagePotential;
+        }
+        json.append("\"value\":").append(damagePotential);
+        json.append("}");
+    }
+    json.append("],");
+    
+    json.append("\"castable_card_count\":").append(castableCount).append(",");
+    json.append("\"total_damage_potential\":").append(totalDamagePotential).append(",");
+    
+    // ========== RESOURCE TRACKING ==========
+    int cardsRemaining = countTCAndMainDeckSpells(player);
+    json.append("\"cards_remaining\":").append(cardsRemaining).append(",");
+    
+    int opponentCardsRemaining = countTCAndMainDeckSpells(opponent);
+    json.append("\"opponent_cards_remaining\":").append(opponentCardsRemaining).append(",");
+    
+    // ========== GAME CONTEXT ==========
+    json.append("\"round_number\":").append(roundNumber).append(",");
+    
+    // Calculate health advantage
+    double healthAdvantage = (player.getStatsInformation().getHealth() - 
+                              opponent.getStatsInformation().getHealth()) / 11443.0;
+    json.append("\"health_advantage\":").append(String.format("%.3f", healthAdvantage)).append(",");
+    
+    // Calculate pip advantage
+    int pipAdvantage = player.getPips() - opponent.getPips();
+    json.append("\"pip_advantage\":").append(pipAdvantage).append(",");
+    
+    // Calculate tactical advantage (blades - shields difference)
+    int tacticalAdvantage = (playerBladeStrength - opponentShieldStrength) - 
+                            (opponentBladeStrength - playerShieldStrength);
+    json.append("\"tactical_advantage\":").append(tacticalAdvantage).append(",");
+    
+    // ========== ACTION MASKING ==========
+    json.append("\"valid_actions\":[1"); // Can always pass
+    for (int i = 0; i < hand.size(); i++) {
+        Spell spell = hand.get(i);
+        boolean canCast = !spell.getName().equals("X") && spell.getPips() <= player.getPips();
+        
+        // Check shadow spells
+        if (spell.getName().toLowerCase().contains("mockenspiel") || 
+            spell.getName().toLowerCase().contains("shadow shrike")) {
+            canCast = canCast && player.getShadowGauge() >= 100;
+        }
+        
+        json.append(",").append(canCast ? 1 : 0);
+    }
+    json.append("],");
+    
+    json.append("\"training\":").append(trainingMode);
+    json.append("}");
+    
+    return json.toString();
+}
+
+/**
+ * Helper: Extract percentage value from charm/shield/trap strings
+ */
+private int extractPercentage(String text) {
+    if (text == null) return 0;
+    StringBuilder sb = new StringBuilder();
+    boolean foundDigit = false;
+    for (char c : text.toCharArray()) {
+        if (Character.isDigit(c)) {
+            sb.append(c);
+            foundDigit = true;
+        } else if (foundDigit) {
+            break; // Stop after first number group
+        }
+    }
+    try {
+        return sb.length() > 0 ? Integer.parseInt(sb.toString()) : 0;
+    } catch (NumberFormatException e) {
+        return 0;
+    }
+}
+
+/**
+ * Helper: Estimate the strategic value of a spell
+ */
+private int estimateSpellValue(Spell spell, Wizard player, Wizard opponent) {
+    String name = spell.getName().toLowerCase();
+    int baseDamage = 0;
+    
+    // Damage spells (rough estimates)
+    if (name.contains("judgment")) {
+        baseDamage = 100 * player.getPips();
+    } else if (name.contains("nova")) {
+        baseDamage = 665;
+    } else if (name.contains("sabertooth")) {
+        baseDamage = 845;
+    } else if (name.contains("mockenspiel")) {
+        baseDamage = 860;
+    } else if (name.contains("ra")) {
+        baseDamage = 460;
+    } else if (name.contains("sandstorm")) {
+        baseDamage = 275;
+    } else if (name.contains("spectral blast")) {
+        baseDamage = 450;
+    } else if (name.contains("mana burn")) {
+        baseDamage = 85 * opponent.getPips();
+    }
+    
+    // Buff spells (convert to equivalent damage value)
+    else if (name.contains("blade")) {
+        return 200; // Blades are very valuable
+    } else if (name.contains("trap")) {
+        return 150;
+    } else if (name.contains("shield")) {
+        return 180; // Defense is valuable
+    } else if (name.contains("reshuffle")) {
+        return 100; // Resource management
+    } else if (name.contains("magnify") || name.contains("aura")) {
+        return 160;
+    }
+    
+    // Apply damage boost from player's stats
+    if (baseDamage > 0) {
+        try {
+            int damageBoost = player.getStatsInformation().getDamage()
+                .get(player.getIdentity().toLowerCase());
+            baseDamage = (int)(baseDamage * (1 + damageBoost / 100.0));
+        } catch (Exception e) {
+            // Use base damage if error
+        }
+    }
+    
+    return baseDamage;
+}
+    /*private String createGameState(Wizard player, Wizard opponent, List<Spell> hand) {
         StringBuilder json = new StringBuilder();
         json.append("{");
         
@@ -2325,7 +2716,7 @@ int activeHandSize = 0;
         json.append("}");
         
         return json.toString();
-    }
+    }*/
     
     /**
      * Calls the Python PPO agent to select an action
@@ -2748,7 +3139,145 @@ int activeHandSize = 0;
      * Calculates reward based ONLY on game outcomes (generic)
      * Works for discard, draw, AND cast decisions
      */
-    private double calculateReward(Wizard player, Wizard opponent, 
+    /**
+ * ENHANCED REWARD CALCULATION
+ * Provides richer learning signals to help AI learn faster
+ */
+private double calculateReward(Wizard player, Wizard opponent, 
+                                int previousPlayerHealth, int previousOpponentHealth, 
+                                boolean spellCast) {
+    double reward = 0.0;
+    
+    // ========== PRIMARY REWARD: DAMAGE DIFFERENTIAL ==========
+    int opponentDamage = previousOpponentHealth - opponent.getStatsInformation().getHealth();
+    if (opponentDamage > 0) {
+        // Scale reward based on damage dealt (normalized)
+        reward += opponentDamage / 100.0;
+        
+        // BONUS: Extra reward for lethal damage
+        if (opponent.getStatsInformation().getHealth() <= 0) {
+            reward += 2.0; // Bonus for finishing the opponent
+        }
+        
+        // BONUS: Extra reward for high-damage turns (efficient play)
+        if (opponentDamage > 2000) {
+            reward += 1.0; // Reward big hits
+        }
+    }
+    
+    int playerDamage = previousPlayerHealth - player.getStatsInformation().getHealth();
+    if (playerDamage > 0) {
+        // Penalty for taking damage
+        reward -= playerDamage / 100.0;
+        
+        // EXTRA PENALTY: Taking massive damage in one turn
+        if (playerDamage > 2000) {
+            reward -= 0.5;
+        }
+    }
+    
+    // ========== TACTICAL REWARDS: BUFF/DEBUFF MANAGEMENT ==========
+    // Reward for building up tactical advantage
+    int currentBlades = player.getPositiveCharms().size();
+    int currentTrapsOnOpponent = opponent.getTrapsList().size();
+    int currentShields = player.getShieldsList().size();
+    
+    // Reward blade stacking (setup for big damage)
+    if (currentBlades > 0 && !spellCast) {
+        reward += currentBlades * 0.1; // Small reward for each blade
+    }
+    
+    // Reward trap setting (setup for big damage)
+    if (currentTrapsOnOpponent > 0) {
+        reward += currentTrapsOnOpponent * 0.08;
+    }
+    
+    // Reward defensive play when low health
+    if (player.getStatsInformation().getHealth() < 4000 && currentShields > 0) {
+        reward += currentShields * 0.1;
+    }
+    
+    // PENALTY: Having weaknesses on self is bad
+    int currentWeaknesses = player.getNegativeCharms().size();
+    if (currentWeaknesses > 0) {
+        reward -= currentWeaknesses * 0.05;
+    }
+    
+    // ========== RESOURCE MANAGEMENT REWARDS ==========
+    // Reward pip efficiency (using pips wisely)
+    if (spellCast) {
+        reward += 0.15; // Small reward for taking action
+        
+        // Bonus for not wasting pips (casting when you have many pips)
+        if (player.getPips() < 4) {
+            reward += 0.1; // Good pip management
+        }
+    } else {
+        // PENALTY for passing when you have many pips and castable cards
+        if (player.getPips() > 7) {
+            reward -= 0.2; // Encourage action when resources available
+        }
+    }
+    
+    // ========== TEMPO & MOMENTUM REWARDS ==========
+    // Reward health advantage
+    int healthDiff = player.getStatsInformation().getHealth() - 
+                     opponent.getStatsInformation().getHealth();
+    if (healthDiff > 3000) {
+        reward += 0.3; // Reward being ahead
+    } else if (healthDiff < -3000) {
+        reward -= 0.2; // Slight penalty for being behind
+    }
+    
+    // ========== TERMINAL REWARDS: WIN/LOSS ==========
+    if (opponent.getStatsInformation().getHealth() <= 0) {
+        reward += 10.0; // Large bonus for winning
+        
+        // EXTRA BONUS: Win with high health remaining
+        if (player.getStatsInformation().getHealth() > 8000) {
+            reward += 2.0; // Dominant victory
+        }
+    }
+    
+    if (player.getStatsInformation().getHealth() <= 0) {
+        reward -= 10.0; // Large penalty for losing
+    }
+    
+    // ========== EXPLORATION BONUS ==========
+    // Small random noise to encourage exploration (early training)
+    if (roundNumber < 20) {
+        reward += (Math.random() - 0.5) * 0.1;
+    }
+    
+    return reward;
+}
+
+/**
+ * ALTERNATIVE: Simpler reward focused on outcome only
+ * Use this if the detailed rewards cause instability
+ */
+private double calculateSimpleReward(Wizard player, Wizard opponent, 
+                                      int previousPlayerHealth, int previousOpponentHealth) {
+    double reward = 0.0;
+    
+    // Damage differential only
+    int opponentDamage = previousOpponentHealth - opponent.getStatsInformation().getHealth();
+    reward += opponentDamage / 100.0;
+    
+    int playerDamage = previousPlayerHealth - player.getStatsInformation().getHealth();
+    reward -= playerDamage / 100.0;
+    
+    // Terminal rewards
+    if (opponent.getStatsInformation().getHealth() <= 0) {
+        reward += 10.0;
+    }
+    if (player.getStatsInformation().getHealth() <= 0) {
+        reward -= 10.0;
+    }
+    
+    return reward;
+}
+    /*private double calculateReward(Wizard player, Wizard opponent, 
                                     int previousPlayerHealth, int previousOpponentHealth, 
                                     boolean spellCast) {
         double reward = 0.0;
@@ -2780,7 +3309,7 @@ int activeHandSize = 0;
         }
         
         return reward;
-    }
+    }*/
     
     /**
      * Simplified: Remove card-specific discard reward
